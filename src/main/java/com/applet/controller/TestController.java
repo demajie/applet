@@ -2,6 +2,7 @@ package com.applet.controller;
 
 
 import com.applet.common.JsonWrapper;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotBlank;
 
-@ApiOperation("测试类api")
+@Api(tags = "测试类api")
 @RestController
 @RequestMapping("api")
 public class TestController {
