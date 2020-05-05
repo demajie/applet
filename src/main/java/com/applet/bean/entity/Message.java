@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -64,5 +65,11 @@ public class Message implements Serializable {
     * 消息发布时间
     */
     @ApiModelProperty("消息发布时间")
-    private Date annoTime;
+    private LocalDateTime annoTime;
+
+    /**
+     * 消息等级
+     */
+    @ApiModelProperty("消息等级")
+    private String level;
 }

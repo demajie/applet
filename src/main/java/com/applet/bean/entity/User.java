@@ -36,4 +36,7 @@ public class User {
 
     @ApiModelProperty("单元id")
     private Integer unitId;
+
+    @ApiModelProperty("门牌号")
+    private String houseNum;
 }

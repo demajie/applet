@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "管理员行为")
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/admin")
 public class AdminController {
 
     @Autowired
