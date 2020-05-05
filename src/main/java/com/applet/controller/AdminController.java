@@ -26,8 +26,16 @@ public class AdminController {
 
     @ApiOperation("删除管理员")
     @ApiImplicitParam(name = "id",value = "用户id",dataType = "Integer")
-    @PostMapping("deleteAdmin")
-    public JsonWrapper<Boolean> deleteAdmin(@RequestParam("id")Integer id){
+    @PostMapping("deleteAdmin/{id}")
+    public JsonWrapper<Boolean> deleteAdmin(@PathVariable("id")Integer id){
         return new JsonWrapper<>(adminService.deleteAdmin(id));
     }
+
+    @ApiOperation("生成小区邀请码")
+    @GetMapping("getCommunityInvitationCode")
+    public JsonWrapper<String> communityInvitationCode(){
+        return null;
+    }
+
+
 }

@@ -12,6 +12,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         implements AdminService {
@@ -20,7 +22,6 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
 
     @Autowired
     UserMapper userMapper;
-
 
     /**
      *  待完善:权限验证
@@ -33,6 +34,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         BeanUtils.copyProperties(adminAddInfo,admin);
         admin.setEmail(user.getEmail());
         admin.setName(user.getName());
+        admin.setCommunityId(1);
         if (adminMapper.insert(admin)>0){
             return true;
         }
@@ -40,11 +42,24 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
     }
 
     /**
-     *  权限验证
+     *  待完善:权限验证
      */
     @Override
     public Boolean deleteAdmin(Integer id) {
         userMapper.deleteById(id);
         return true;
+    }
+
+    @Override
+    public Boolean updateState(Integer id,Integer state) {
+        Admin admin = adminMapper.selectById(id);
+        admin.setState(state);
+        adminMapper.updateById(admin);
+        return true;
+    }
+
+    @Override
+    public List<Admin> getAllAdmin(Integer communityId) {
+        return null;
     }
 }

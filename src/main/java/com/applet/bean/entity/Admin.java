@@ -5,9 +5,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @ApiModel("管理员实体类")
 @Data
-public class Admin {
+public class Admin implements Serializable {
+
+    private static final long serialVersionUID = -909203054937672055L;
+
     @ApiModelProperty("用户id")
     private Integer id;
 
@@ -17,14 +22,17 @@ public class Admin {
     @ApiModelProperty("职位")
     private String position;
 
+    @ApiModelProperty("值守范围")
+    private String jobDuty;
+
     @ApiModelProperty("政治面貌")
     private String politic;
 
     @ApiModelProperty("办公地点")
-    private String office_location;
+    private String officeLocation;
 
     @ApiModelProperty("固定电话")
-    private String fixed_phone;
+    private String fixedPhone;
 
     @ApiModelProperty("用户邮箱")
     private String email;
@@ -32,6 +40,9 @@ public class Admin {
     @ApiModelProperty("用户照片")
     private String photo;
 
-    @ApiModelProperty("工作状态,0在岗,1外出")
+    @ApiModelProperty("工作状态:0在岗,1出勤,2节假日")
     private Integer state;
+
+    @ApiModelProperty("社区id")
+    private Integer communityId;
 }
