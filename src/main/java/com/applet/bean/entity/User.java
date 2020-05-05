@@ -16,8 +16,8 @@ public class User {
     @ApiModelProperty("姓名")
     private String name;
 
-    @ApiModelProperty("性别,0男1女")
-    private Integer gender;
+    @ApiModelProperty("性别")
+    private String gender;
 
     @ApiModelProperty("出生日期")
     private LocalDateTime birthday;
@@ -36,4 +36,7 @@ public class User {
 
     @ApiModelProperty("单元id")
     private Integer unitId;
+
+    @ApiModelProperty("门牌号")
+    private String houseNum;
 }
