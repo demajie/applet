@@ -14,10 +14,10 @@ public interface MessageService extends IService<Message> {
     /**
      * 返回当前用户所有消息
      */
-    List<MessageInfo> getAllMessage(Integer id);
+    List<MessageInfo> getAllMessage();
 
     /**
      * 获取当前用户单日消息
      */
-    List<MessageInfo> getDayMessage(Integer id);
+    List<MessageInfo> getDayMessage();
 }

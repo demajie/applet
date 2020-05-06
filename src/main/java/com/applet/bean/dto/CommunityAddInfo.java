@@ -1,4 +1,4 @@
-package com.applet.bean.entity;
+package com.applet.bean.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,27 +10,17 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * (Community)实体类
- *
  * @author LuckyCurve
- * @since 2020-05-05 09:42:48
+ * @date 2020/5/6 14:37
  */
-
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@ApiModel("社区实体类")
-public class Community implements Serializable {
-    private static final long serialVersionUID = -93385308685272535L;
-    /**
-    * 社区id
-    */
-    @ApiModelProperty("社区id")
-    private Integer id;
-    /**
-    * 社区名称
-    */
+@NoArgsConstructor
+@ApiModel("创建社区信息")
+public class CommunityAddInfo implements Serializable {
+    private static final long serialVersionUID = 6018316808157053295L;
+
     @ApiModelProperty("社区名称")
     private String name;
 

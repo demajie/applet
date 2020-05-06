@@ -3,12 +3,11 @@ package com.applet.controller;
 
 import com.applet.bean.dto.UserAddInfo;
 import com.applet.bean.vo.LoginInfo;
-import com.applet.bean.vo.MessageInfo;
 import com.applet.common.JsonWrapper;
 import com.applet.service.UserService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,9 +34,16 @@ public class UserController {
     }
 
     @GetMapping("saveUser")
-    @ApiOperation("登记用户基本信息")
+    @ApiOperation("加入社区，登记用户基本信息")
     public JsonWrapper<Boolean> saveUser(UserAddInfo userAddInfo) {
         return new JsonWrapper<>(userService.saveUser(userAddInfo));
+    }
+
+    @GetMapping("querySuperAdmin")
+    @ApiOperation("创建社区，设置当前用户为超级管理员")
+    @ApiImplicitParam(name = "id",value = "当前用户的appid")
+    public JsonWrapper<Boolean> querySuperAdmin(Integer id) {
+        return new JsonWrapper<>(userService.querySuperAdmin(id));
     }
 
 

@@ -1,6 +1,12 @@
 package com.applet.controller;
 
+import com.applet.bean.dto.CommunityAddInfo;
+import com.applet.common.JsonWrapper;
+import com.applet.service.CommunityService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,4 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/community")
 public class CommunityMessage {
+
+    @Autowired
+    CommunityService communityService;
+
+    @ApiOperation("创建社区")
+    @GetMapping("create")
+    public JsonWrapper<Boolean> create(CommunityAddInfo communityAddInfo) {
+        return new JsonWrapper<>(communityService.create(communityAddInfo));
+    }
+
+
 }
