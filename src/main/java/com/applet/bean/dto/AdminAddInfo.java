@@ -7,6 +7,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author gsj
+ */
 
 @ApiModel("管理员添加信息")
 @Data

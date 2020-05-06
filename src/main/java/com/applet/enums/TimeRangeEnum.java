@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
+ * @author gsj
+ */
+
+/**
  *  预约时间段枚举类,8个时间段
  */
 @Getter

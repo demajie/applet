@@ -12,6 +12,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author gsj
+ */
+
 @Service
 public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appointment>
         implements AppointmentService {
@@ -34,7 +38,6 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
         User user = userMapper.selectById(id);
         appointment.setId(id);
         appointment.setName(user.getName());
-        appointment.setAdminId(2);
         if (appointmentMapper.insert(appointment)>0){
             return true;
         }

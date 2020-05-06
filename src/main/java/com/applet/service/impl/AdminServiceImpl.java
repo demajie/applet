@@ -3,16 +3,21 @@ package com.applet.service.impl;
 import com.applet.bean.dto.AdminAddInfo;
 import com.applet.bean.entity.Admin;
 import com.applet.bean.entity.User;
+import com.applet.bean.vo.AdminDetailInfo;
+import com.applet.bean.vo.AdminSimpleInfo;
 import com.applet.mapper.AdminMapper;
 import com.applet.mapper.UserMapper;
 import com.applet.service.AdminService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+/**
+ * @author gsj
+ */
 
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
@@ -59,7 +64,13 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
     }
 
     @Override
-    public List<Admin> getAllAdmin(Integer communityId) {
-        return null;
+    public List<AdminSimpleInfo> getAdminSimpInfos(Integer communityId) {
+        return adminMapper.getAdminSimpInfos(communityId);
     }
+
+    @Override
+    public AdminDetailInfo getAdminDetailInfo(Integer userId) {
+        return adminMapper.getAdminDetailInfo(userId);
+    }
+
 }

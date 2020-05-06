@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author gsj
+ */
 @ApiModel("管理员详细信息")
 @Data
 public class AdminDetailInfo implements Serializable{

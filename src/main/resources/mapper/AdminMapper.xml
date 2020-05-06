@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.applet.mapper.AdminMapper">
+
+    <select id="getAdminSimpInfos" resultType="com.applet.bean.vo.AdminSimpleInfo">
+        select id,name,position,politic,job_duty,state from admin
+        where community_id = #{id}
+    </select>
+
+    <select id="getAdminDetailInfo" resultType="com.applet.bean.vo.AdminDetailInfo">
+        select id,name,politic,job_duty,office_location,fixed_phone,email
+        from admin
+        where id=#{id}
+    </select>
+
+</mapper>

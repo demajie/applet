@@ -7,6 +7,10 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author gsj
+ */
+
 @ApiModel("管理员实体类")
 @Data
 public class Admin implements Serializable {

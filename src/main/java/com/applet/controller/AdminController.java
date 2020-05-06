@@ -10,6 +10,10 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @author gsj
+ */
+
 @Api(tags = "管理员行为")
 @RestController
 @RequestMapping("api/admin")
@@ -31,7 +35,7 @@ public class AdminController {
         return new JsonWrapper<>(adminService.deleteAdmin(id));
     }
 
-    @ApiOperation("生成小区邀请码")
+    @ApiOperation("生成6位小区邀请码")
     @GetMapping("getCommunityInvitationCode")
     public JsonWrapper<String> communityInvitationCode(){
         return null;

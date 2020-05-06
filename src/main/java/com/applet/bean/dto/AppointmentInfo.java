@@ -6,6 +6,10 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 
+/**
+ * @author gsj
+ */
+
 @ApiModel("预约信息")
 public class AppointmentInfo implements Serializable {
 
@@ -22,4 +26,8 @@ public class AppointmentInfo implements Serializable {
 
     @ApiModelProperty("用户电话")
     private String phone;
+
+    @ApiModelProperty("预约的管理人员id")
+    private Integer adminId;
+
 }

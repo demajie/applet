@@ -6,6 +6,10 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author gsj
+ */
+
 @ApiModel("预约实体类")
 @Data
 public class Appointment implements Serializable {

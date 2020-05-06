@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author gsj
+ */
 @ApiModel("管理员简单信息")
 @Data
 public class AdminSimpleInfo implements Serializable {
@@ -25,4 +28,7 @@ public class AdminSimpleInfo implements Serializable {
 
     @ApiModelProperty("值守范围")
     private String jobDuty;
+
+    @ApiModelProperty("工作状态:0在岗,1出勤,2节假日")
+    private Integer state;
 }
