@@ -28,15 +28,14 @@ public class MessageController {
 
     @GetMapping("getAllMessage")
     @ApiOperation("获取当前用户所有消息，不限于一天之内")
-    @ApiImplicitParam(name = "id",value = "用户的appid",dataType = "Integer")
-    public JsonWrapper<List<MessageInfo>> getAllMessage(Integer id) {
-        return new JsonWrapper<>(getAllMessage.getAllMessage(id));
+    public JsonWrapper<List<MessageInfo>> getAllMessage() {
+        return new JsonWrapper<>(getAllMessage.getAllMessage());
     }
 
     @GetMapping("getDayMessage")
     @ApiOperation("获取当前用户单日消息")
     @ApiImplicitParam(name = "id",value = "用户的appid",dataType = "Integer")
-    public JsonWrapper<List<MessageInfo>> getDayMessage(Integer id) {
-        return new JsonWrapper<>(getAllMessage.getDayMessage(id));
+    public JsonWrapper<List<MessageInfo>> getDayMessage() {
+        return new JsonWrapper<>(getAllMessage.getDayMessage());
     }
 }

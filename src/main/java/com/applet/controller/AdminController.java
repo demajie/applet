@@ -31,7 +31,7 @@ public class AdminController {
         return new JsonWrapper<>(adminService.deleteAdmin(id));
     }
 
-    @ApiOperation("生成小区邀请码")
+    @ApiOperation("获取小区邀请码")
     @GetMapping("getCommunityInvitationCode")
     public JsonWrapper<String> communityInvitationCode(){
         return null;
