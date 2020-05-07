@@ -1,6 +1,7 @@
 package com.applet.controller;
 
 
+import com.applet.bean.dto.SuperAdminAddInfo;
 import com.applet.bean.dto.UserAddInfo;
 import com.applet.bean.vo.LoginInfo;
 import com.applet.common.JsonWrapper;
@@ -28,9 +29,10 @@ public class UserController {
     UserService userService;
 
     @GetMapping("isLogin")
-    @ApiOperation("判断用户是否登录，并返回用户级别")
-    public JsonWrapper<LoginInfo> lsLogin() {
-        return new JsonWrapper<>(userService.lsLogin());
+    @ApiOperation("判断用户是否登录过，如果登录了并返回用户级别")
+    @ApiImplicitParam(name = "userId",value = "用户id")
+    public JsonWrapper<LoginInfo> lsLogin(Integer userId) {
+        return new JsonWrapper<>(userService.lsLogin(userId));
     }
 
     @GetMapping("saveUser")
@@ -39,11 +41,11 @@ public class UserController {
         return new JsonWrapper<>(userService.saveUser(userAddInfo));
     }
 
-    @GetMapping("querySuperAdmin")
+
+    @GetMapping("saveSuperAdminInfo")
     @ApiOperation("创建社区，设置当前用户为超级管理员")
-    @ApiImplicitParam(name = "id",value = "当前用户的appid")
-    public JsonWrapper<Boolean> querySuperAdmin(Integer id) {
-        return new JsonWrapper<>(userService.querySuperAdmin(id));
+    public JsonWrapper<Boolean> saveSuperAdminInfo(SuperAdminAddInfo info) {
+        return new JsonWrapper<>(userService.saveSuperAdminInfo(info));
     }
 
 

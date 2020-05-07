@@ -72,4 +72,7 @@ public class Message implements Serializable {
      */
     @ApiModelProperty("消息等级")
     private String level;
+
+    @ApiModelProperty("消息发布人id")
+    private Integer annoUser;
 }

@@ -2,6 +2,10 @@ package com.applet.bean.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -11,6 +15,10 @@ import java.time.LocalDateTime;
  * @date 2020/5/5 15:39
  */
 @ApiModel("用户信息收集模块")
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserAddInfo implements Serializable {
 
     private static final long serialVersionUID = 7436514132682712643L;

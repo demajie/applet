@@ -28,7 +28,6 @@ public class BuildingController {
 
     @ApiOperation("创建楼栋")
     @GetMapping("create")
-    @ApiImplicitParam(name = "num",value = "楼栋数")
     public JsonWrapper<Boolean> create(List<BuildingAddInfo> infoList) {
         return new JsonWrapper<>(buildingService.create(infoList));
     }

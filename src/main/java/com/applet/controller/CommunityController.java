@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "社区API")
 @RestController
 @RequestMapping("api/community")
-public class CommunityMessage {
+public class CommunityController {
 
     @Autowired
     CommunityService communityService;

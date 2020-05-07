@@ -1,6 +1,7 @@
 package com.applet.service;
 
 
+import com.applet.bean.dto.SuperAdminAddInfo;
 import com.applet.bean.dto.UserAddInfo;
 import com.applet.bean.entity.User;
 import com.applet.bean.vo.LoginInfo;
@@ -13,7 +14,7 @@ public interface UserService extends IService<User> {
     /**
      * 判断用户是否是第一次登录，并返回权限信息，存储用户id
      */
-    LoginInfo lsLogin();
+    LoginInfo lsLogin(Integer userId);
 
     /**
      * 保存用户信息
@@ -22,7 +23,7 @@ public interface UserService extends IService<User> {
 
 
     /**
-     * 登记为超级管理员，存储用户id
+     * 超级管理员信息登记
      */
-    Boolean querySuperAdmin(Integer id);
+    Boolean saveSuperAdminInfo(SuperAdminAddInfo info);
 }

@@ -23,6 +23,6 @@ public class LoginInfo implements Serializable {
     @ApiModelProperty("是否登录过，0未登录 1已登录")
     private Integer isLogin;
 
-    @ApiModelProperty("权限级别，可取值：管理员，超级管理员")
+    @ApiModelProperty("权限级别，可取值：普通用户，管理员，超级管理员")
     private String level;
 }

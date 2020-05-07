@@ -1,5 +1,4 @@
-package com.applet.bean.entity;
-
+package com.applet.bean.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,15 +7,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@ApiModel("用户实体类")
+/**
+ * @author LuckyCurve
+ * @date 2020/5/7 14:20
+ */
+@ApiModel("超级管理员信息登记")
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class User {
-    @ApiModelProperty("用户id")
+@NoArgsConstructor
+public class SuperAdminAddInfo implements Serializable {
+    private static final long serialVersionUID = -211609935661169265L;
+
+    @ApiModelProperty("用户appId")
     private Integer id;
 
     @ApiModelProperty("姓名")
@@ -28,21 +34,6 @@ public class User {
     @ApiModelProperty("出生日期")
     private LocalDateTime birthday;
 
-    @ApiModelProperty("用户权限等级,0普通用户,1普通管理员,2超级管理员")
-    private Integer permId;
-
     @ApiModelProperty("用户邮箱")
     private String email;
-
-    @ApiModelProperty("社区id")
-    private Integer communityId;
-
-    @ApiModelProperty("楼栋id")
-    private Integer buildingId;
-
-    @ApiModelProperty("单元id")
-    private Integer unitId;
-
-    @ApiModelProperty("门牌号")
-    private String houseNum;
 }
