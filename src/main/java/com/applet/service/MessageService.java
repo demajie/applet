@@ -1,5 +1,6 @@
 package com.applet.service;
 
+import com.applet.bean.dto.AnnoMessageInfo;
 import com.applet.bean.entity.Message;
 import com.applet.bean.vo.MessageInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -20,4 +21,19 @@ public interface MessageService extends IService<Message> {
      * 获取当前用户单日消息
      */
     List<MessageInfo> getDayMessage();
+
+    /**
+     * 发布消息到当前社区
+     */
+    Boolean annoMessageCommunity(AnnoMessageInfo info);
+
+    /**
+     * 发布消息到指定楼栋
+     */
+    Boolean annoMessageBuilding(List<Integer> buildingId,AnnoMessageInfo info);
+
+    /**
+     * 发布消息到指定单元
+     */
+    Boolean annoMessageUnit(List<Integer> unitId,AnnoMessageInfo info);
 }

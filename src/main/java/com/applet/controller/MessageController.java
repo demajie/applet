@@ -1,6 +1,7 @@
 package com.applet.controller;
 
 
+import com.applet.bean.dto.AnnoMessageInfo;
 import com.applet.bean.vo.MessageInfo;
 import com.applet.common.JsonWrapper;
 import com.applet.service.MessageService;
@@ -26,14 +27,35 @@ public class MessageController {
     @Autowired
     MessageService getAllMessage;
 
+    @GetMapping("annoMessageCommunity")
+    @ApiOperation("管理员，发布消息到当前社区")
+    public JsonWrapper<Boolean> annoMessageCommunity(AnnoMessageInfo info) {
+        return new JsonWrapper<>(getAllMessage.annoMessageCommunity(info));
+    }
+
+    @GetMapping("annoMessageBuilding")
+    @ApiOperation("管理员，发布消息到指定楼栋")
+    @ApiImplicitParam(name = "buildingId",value = "楼栋id")
+    public JsonWrapper<Boolean> annoMessageBuilding(List<Integer> buildingId,AnnoMessageInfo info) {
+        return new JsonWrapper<>(getAllMessage.annoMessageBuilding(buildingId,info));
+    }
+
+    @GetMapping("annoMessageUnit")
+    @ApiOperation("管理员，发布消息到指定单元")
+    @ApiImplicitParam(name = "unitId",value = "单元id")
+    public JsonWrapper<Boolean> annoMessageUnit(List<Integer> unitId,AnnoMessageInfo info) {
+        return new JsonWrapper<>(getAllMessage.annoMessageUnit(unitId,info));
+    }
+
+
     @GetMapping("getAllMessage")
-    @ApiOperation("获取当前用户所有消息，不限于一天之内")
+    @ApiOperation("普通用户，查询所有消息")
     public JsonWrapper<List<MessageInfo>> getAllMessage() {
         return new JsonWrapper<>(getAllMessage.getAllMessage());
     }
 
     @GetMapping("getDayMessage")
-    @ApiOperation("获取当前用户单日消息")
+    @ApiOperation("普通用户，查询单日消息")
     @ApiImplicitParam(name = "id",value = "用户的appid",dataType = "Integer")
     public JsonWrapper<List<MessageInfo>> getDayMessage() {
         return new JsonWrapper<>(getAllMessage.getDayMessage());
