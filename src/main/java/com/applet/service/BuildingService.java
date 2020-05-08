@@ -2,6 +2,7 @@ package com.applet.service;
 
 import com.applet.bean.dto.BuildingAddInfo;
 import com.applet.bean.entity.Building;
+import com.applet.bean.vo.BuildingInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -16,4 +17,9 @@ public interface BuildingService extends IService<Building> {
      * 并调用单元创建方法，与该楼栋绑定
      */
     Boolean create(List<BuildingAddInfo> num);
+
+    /**
+     * 获取当前社区所有楼栋信息
+     */
+    List<BuildingInfo> getAll();
 }

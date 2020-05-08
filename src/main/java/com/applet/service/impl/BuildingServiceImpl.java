@@ -3,10 +3,12 @@ package com.applet.service.impl;
 import com.applet.bean.dto.BuildingAddInfo;
 import com.applet.bean.entity.Building;
 import com.applet.bean.entity.Unit;
+import com.applet.bean.vo.BuildingInfo;
 import com.applet.mapper.BuildingMapper;
 import com.applet.service.BuildingService;
 import com.applet.service.UnitService;
 import com.applet.utils.RequestUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +47,18 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
         }
 
         return true;
+    }
+
+    @Override
+    public List<BuildingInfo> getAll() {
+        QueryWrapper<Building> wrapper = new QueryWrapper<>();
+        wrapper.eq("community_id",RequestUtils.getCurrentCommunityId());
+        List<Building> list = list(wrapper);
+        LinkedList<BuildingInfo> list1 = new LinkedList<>();
+        for (Building i : list) {
+            BuildingInfo build = BuildingInfo.builder().id(i.getId()).name(i.getName()).build();
+            list1.add(build);
+        }
+        return list1;
     }
 }

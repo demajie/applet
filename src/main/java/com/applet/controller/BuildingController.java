@@ -2,6 +2,7 @@ package com.applet.controller;
 
 import com.applet.bean.dto.BuildingAddInfo;
 import com.applet.bean.dto.CommunityAddInfo;
+import com.applet.bean.vo.BuildingInfo;
 import com.applet.common.JsonWrapper;
 import com.applet.service.BuildingService;
 import io.swagger.annotations.Api;
@@ -30,6 +31,12 @@ public class BuildingController {
     @GetMapping("create")
     public JsonWrapper<Boolean> create(List<BuildingAddInfo> infoList) {
         return new JsonWrapper<>(buildingService.create(infoList));
+    }
+
+    @ApiOperation("查看当前社区所有楼栋")
+    @GetMapping("getAll")
+    public JsonWrapper<List<BuildingInfo>> getAll() {
+        return new JsonWrapper<>(buildingService.getAll());
     }
 
 }
