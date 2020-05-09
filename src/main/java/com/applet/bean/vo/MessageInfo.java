@@ -1,5 +1,7 @@
 package com.applet.bean.vo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -22,6 +24,9 @@ import java.time.LocalDateTime;
 public class MessageInfo implements Serializable {
     private static final long serialVersionUID = -1024983820237141960L;
 
+    @ApiModelProperty("消息id")
+    private Integer id;
+
     @ApiModelProperty("消息体")
     private String message;
 
@@ -30,4 +35,7 @@ public class MessageInfo implements Serializable {
 
     @ApiModelProperty("消息等级")
     private String level;
+
+    @ApiModelProperty("消息发布人名")
+    private String annoUser;
 }

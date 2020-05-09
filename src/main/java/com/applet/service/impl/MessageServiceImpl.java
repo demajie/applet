@@ -10,12 +10,19 @@ import com.applet.mapper.MessageMapper;
 import com.applet.service.MessageService;
 import com.applet.service.UserService;
 import com.applet.utils.RequestUtils;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.injector.methods.DeleteById;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,12 +38,47 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
 
     @Override
     public List<MessageInfo> getAllMessage() {
-        return null;
+        Integer userId = RequestUtils.getCurrentUserId();
+        User user = userService.getById(userId);
+        Integer communityId = user.getCommunityId();
+        Integer buildingId = user.getBuildingId();
+        Integer unitId = user.getUnitId();
+        QueryWrapper<Message> wrapper = new QueryWrapper<>();
+        wrapper.eq("community_id",communityId).or().eq("building_id",buildingId)
+                .or().eq("unit_id",unitId).orderByDesc("anno_time");
+        List<Message> messages = list(wrapper);
+        LinkedList<MessageInfo> list = new LinkedList<>();
+        for (Message i : messages) {
+            String name = userService.getById(i.getAnnoUser()).getName();
+            MessageInfo info = MessageInfo.builder().id(i.getId()).message(i.getMessage())
+                    .annoTime(i.getAnnoTime()).level(i.getLevel()).annoUser(name)
+                    .build();
+            list.add(info);
+        }
+        return list;
     }
 
     @Override
     public List<MessageInfo> getDayMessage() {
-        return null;
+        Integer userId = RequestUtils.getCurrentUserId();
+        User user = userService.getById(userId);
+        Integer communityId = user.getCommunityId();
+        Integer buildingId = user.getBuildingId();
+        Integer unitId = user.getUnitId();
+        LocalDate now = LocalDate.now();
+        QueryWrapper<Message> wrapper = new QueryWrapper<>();
+        wrapper.eq("community_id",communityId).gt("anno_time",now).or().eq("building_id",buildingId).gt("anno_time",now)
+                .or().eq("unit_id",unitId).gt("anno_time",now).orderByDesc("anno_time");
+        List<Message> messages = list(wrapper);
+        LinkedList<MessageInfo> list = new LinkedList<>();
+        for (Message i : messages) {
+            String name = userService.getById(i.getAnnoUser()).getName();
+            MessageInfo info = MessageInfo.builder().id(i.getId()).message(i.getMessage())
+                    .annoTime(i.getAnnoTime()).level(i.getLevel()).annoUser(name)
+                    .build();
+            list.add(info);
+        }
+        return list;
     }
 
     @Override
@@ -85,5 +127,13 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
             list.add(message);
         }
         return saveBatch(list);
+    }
+
+    @Override
+    public Boolean deleteMessage(Integer messageId) {
+        if (RequestUtils.getCurrentPermId() == 0) {
+            throw new KnownException(ExceptionEnum.NO_PERMISSION);
+        }
+        return removeById(messageId);
     }
 }
