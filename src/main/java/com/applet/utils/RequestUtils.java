@@ -51,4 +51,12 @@ public class RequestUtils {
         Integer userId = getCurrentUserId();
         return userService.getById(userId).getCommunityId();
     }
+
+    /**
+     * 获取当前用户权限
+     */
+    public static Integer getCurrentPermId() {
+        Integer userId = getCurrentUserId();
+        return userService.getById(userId).getPermId();
+    }
 }

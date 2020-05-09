@@ -5,6 +5,7 @@ import com.applet.bean.entity.Message;
 import com.applet.bean.vo.MessageInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -36,4 +37,6 @@ public interface MessageService extends IService<Message> {
      * 发布消息到指定单元
      */
     Boolean annoMessageUnit(List<Integer> unitId,AnnoMessageInfo info);
+
+    Boolean deleteMessage(Integer messageId);
 }

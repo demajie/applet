@@ -64,4 +64,10 @@ public class AdminController {
     public JsonWrapper<AdminDetailInfo> getAdminDetailInfo(Integer id){
         return new JsonWrapper<>(adminService.getAdminDetailInfo(id));
     }
+
+    @ApiOperation("获取当前小区邀请码")
+    @GetMapping("getcommunityid")
+    public JsonWrapper<Integer> getCurrentCommunity() {
+        return new JsonWrapper<>(adminService.getCurrentCommunity());
+    }
 }

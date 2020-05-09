@@ -8,7 +8,10 @@ import com.applet.bean.vo.AdminSimpleInfo;
 import com.applet.mapper.AdminMapper;
 import com.applet.mapper.UserMapper;
 import com.applet.service.AdminService;
+<<<<<<< HEAD
 import com.applet.utils.QiniuUtils;
+=======
+>>>>>>> 3f68c75f4574ad2b02f6848f21025785a014bd29
 import com.applet.utils.RequestUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
@@ -75,6 +78,11 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
     @Override
     public AdminDetailInfo getAdminDetailInfo(Integer userId) {
         return adminMapper.getAdminDetailInfo(userId);
+    }
+
+    @Override
+    public Integer getCurrentCommunity() {
+        return RequestUtils.getCurrentCommunityId();
     }
 
 }
