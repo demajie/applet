@@ -8,6 +8,8 @@ import com.applet.bean.vo.AdminSimpleInfo;
 import com.applet.mapper.AdminMapper;
 import com.applet.mapper.UserMapper;
 import com.applet.service.AdminService;
+import com.applet.utils.QiniuUtils;
+import com.applet.utils.RequestUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import java.util.List;
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         implements AdminService {
+
     @Autowired
     AdminMapper adminMapper;
 
@@ -39,7 +42,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         BeanUtils.copyProperties(adminAddInfo,admin);
         admin.setEmail(user.getEmail());
         admin.setName(user.getName());
-        admin.setCommunityId(1);
+        admin.setCommunityId(RequestUtils.getCurrentCommunityId());
+        admin.setPhoto(QiniuUtils.uploadPhoto(adminAddInfo.getFile(),"avatar_"+id));
         if (adminMapper.insert(admin)>0){
             return true;
         }
@@ -51,7 +55,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
      */
     @Override
     public Boolean deleteAdmin(Integer id) {
-        userMapper.deleteById(id);
+        adminMapper.deleteById(id);
         return true;
     }
 

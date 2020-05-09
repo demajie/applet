@@ -1,9 +1,14 @@
 package com.applet.bean.entity;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -18,6 +23,7 @@ public class Admin implements Serializable {
     private static final long serialVersionUID = -909203054937672055L;
 
     @ApiModelProperty("用户id")
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty("姓名")
@@ -41,10 +47,10 @@ public class Admin implements Serializable {
     @ApiModelProperty("用户邮箱")
     private String email;
 
-    @ApiModelProperty("用户照片")
+    @ApiModelProperty("管理员照片")
     private String photo;
 
-    @ApiModelProperty("工作状态:0在岗,1出勤,2节假日")
+    @ApiModelProperty("工作状态:0在岗,1出勤,2开会")
     private Integer state;
 
     @ApiModelProperty("社区id")

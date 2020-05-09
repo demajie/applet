@@ -3,12 +3,12 @@
 <mapper namespace="com.applet.mapper.AdminMapper">
 
     <select id="getAdminSimpInfos" resultType="com.applet.bean.vo.AdminSimpleInfo">
-        select id,name,position,politic,job_duty,state from admin
+        select id,name,position,politic,job_duty,state,photo from admin
         where community_id = #{id}
     </select>
 
     <select id="getAdminDetailInfo" resultType="com.applet.bean.vo.AdminDetailInfo">
-        select id,name,politic,job_duty,office_location,fixed_phone,email
+        select id,name,politic,job_duty,office_location,fixed_phone,email,state
         from admin
         where id=#{id}
     </select>

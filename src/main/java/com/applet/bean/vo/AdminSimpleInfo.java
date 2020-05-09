@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class AdminSimpleInfo implements Serializable {
     private static final long serialVersionUID = -7537647795072348898L;
 
-    @ApiModelProperty("用户id")
+    @ApiModelProperty("管理员id")
     private Integer id;
 
     @ApiModelProperty("姓名")
@@ -31,4 +31,7 @@ public class AdminSimpleInfo implements Serializable {
 
     @ApiModelProperty("工作状态:0在岗,1出勤,2节假日")
     private Integer state;
+
+    @ApiModelProperty("管理员照片")
+    private String photo;
 }

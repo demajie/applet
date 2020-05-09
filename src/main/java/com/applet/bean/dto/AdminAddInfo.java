@@ -5,13 +5,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.File;
 import java.io.Serializable;
 
 /**
  * @author gsj
  */
 
-@ApiModel("管理员添加信息")
+@ApiModel("普通管理员添加信息")
 @Data
 public class AdminAddInfo implements Serializable {
 
@@ -30,8 +31,11 @@ public class AdminAddInfo implements Serializable {
     private String politic;
 
     @ApiModelProperty("办公地点")
-    private String office_location;
+    private String officeLocation;
 
     @ApiModelProperty("固定电话")
-    private String fixed_phone;
+    private String fixedPhone;
+
+    @ApiModelProperty("管理员照片")
+    private File file;
 }
