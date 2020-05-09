@@ -41,4 +41,6 @@ public interface AdminService extends IService<Admin> {
      * @param userId:管理员的用户id
      */
     AdminDetailInfo getAdminDetailInfo(Integer userId);
+
+    Integer getCurrentCommunity();
 }
