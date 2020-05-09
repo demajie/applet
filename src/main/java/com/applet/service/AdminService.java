@@ -44,6 +44,5 @@ public interface AdminService extends IService<Admin> {
      */
     AdminDetailInfo getAdminDetailInfo(Integer userId);
 
-
     Integer getCurrentCommunity();
 }
