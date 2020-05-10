@@ -78,4 +78,14 @@ public class RequestUtils {
                 "区" + unitService.getById(user.getUnitId()).getName() +
                 "单元" + user.getHouseNum() + "室";
     }
+
+    /**
+     * 根据用户id获取住址，如B区9单元502室
+     */
+    public static String getAddressByUserId(Integer userId) {
+        User user = userService.getById(userId);
+        return buildingService.getById(user.getBuildingId()).getName() +
+                "区" + unitService.getById(user.getUnitId()).getName() +
+                "单元" + user.getHouseNum() + "室";
+    }
 }
