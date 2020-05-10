@@ -13,6 +13,6 @@ public class MailTest {
 
     @Test
     public void test1() {
-        MailUtils.sendMail("2410252220@qq.com","消息测试","123456789");
+        MailUtils.sendMail("541099558@qq.com","消息测试","123456789");
     }
 }

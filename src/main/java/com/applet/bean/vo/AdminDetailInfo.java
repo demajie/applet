@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class AdminDetailInfo implements Serializable{
     private static final long serialVersionUID = 8301917223341071071L;
 
-    @ApiModelProperty("用户id")
+    @ApiModelProperty("管理员id")
     private Integer id;
 
     @ApiModelProperty("姓名")
@@ -34,4 +34,7 @@ public class AdminDetailInfo implements Serializable{
 
     @ApiModelProperty("电子邮箱")
     private String email;
+
+    @ApiModelProperty("工作状态:0在岗,1出勤,2节假日")
+    private Integer state;
 }
