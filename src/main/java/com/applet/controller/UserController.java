@@ -48,6 +48,10 @@ public class UserController {
         return new JsonWrapper<>(userService.saveSuperAdminInfo(info));
     }
 
+    @GetMapping("getCurrentAddress")
+    public JsonWrapper<String> getCurrentAddress() {
+        return new JsonWrapper<>(userService.getCurrentAddress());
+    }
 
 
 }

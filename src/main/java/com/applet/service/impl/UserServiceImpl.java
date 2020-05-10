@@ -60,4 +60,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         RequestUtils.getHttpSession().setAttribute("userId",info.getId());
         return save(user);
     }
+
+    @Override
+    public String getCurrentAddress() {
+        return RequestUtils.getCurrentAddress();
+    }
 }

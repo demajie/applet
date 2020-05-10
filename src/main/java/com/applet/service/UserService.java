@@ -26,4 +26,6 @@ public interface UserService extends IService<User> {
      * 超级管理员信息登记
      */
     Boolean saveSuperAdminInfo(SuperAdminAddInfo info);
+
+    String getCurrentAddress();
 }
