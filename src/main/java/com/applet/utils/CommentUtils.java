@@ -1,6 +1,7 @@
 package com.applet.utils;
 
 import com.applet.bean.entity.User;
+import com.applet.bean.vo.CommentSimpleInfo;
 
 import java.time.Year;
 
@@ -58,5 +59,15 @@ public class CommentUtils {
             return name.substring(0,1) + "女士";
         }
         return "未知性别";
+    }
+
+    /**
+     *  管理员是否有权限办理
+     */
+    public static Integer hasPriorityToDeal(CommentSimpleInfo info) {
+        if (info.getStatus()==0 || info.getAdminId()==RequestUtils.getCurrentUserId()) {
+            return 1;
+        }
+        return 0;
     }
 }

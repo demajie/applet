@@ -23,7 +23,7 @@ public interface CommentService extends IService<Comment> {
     Boolean addComment(CommentAddInfo commentAddInfo);
 
     /**
-     *  管理员回复留言,待完善:回复留言的权限校验
+     *  管理员回复留言
      */
     Boolean addReply(ReplyAddInfo addInfo);
 

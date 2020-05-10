@@ -57,4 +57,19 @@ public class QiniuUtils {
         }
         return baseUrl + key;
     }
+
+    /**
+     *  简单版:检验图片格式是否正确
+     */
+    public static boolean checkPictureFormat(String fileName){
+        int beginIndex = fileName.lastIndexOf('.');
+        int endIndex = fileName.length();
+        String fileFormat = fileName.substring(beginIndex,endIndex);
+        if (fileFormat.equals(".png") || fileFormat.equals(".jpg") ||
+                fileFormat.equals(".jpeg") || fileFormat.equals(".gif")){
+            return true;
+        }
+        return false;
+    }
+
 }
