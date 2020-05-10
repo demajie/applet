@@ -42,20 +42,17 @@ public class QiniuUtils {
     }
 
     /**
-     * 上传图片
-     *
-     * @param   file 文件
-     * @return 图片存储的url
+     *  字节数组上传文件时调用该方法
+     * @param key: 文件在七牛云中的存储索引
      */
-    public static String uploadPhoto(File file,String key) {
-        Configuration cfg = new Configuration(Region.region2());
+    public static String uploadPhoto(byte[] bytes,String key) {
+        Configuration cfg = new Configuration(Region.region0());
         UploadManager uploadManager = new UploadManager(cfg);
         try {
-            InputStream inputStream = new FileInputStream(file);
             Auth auth = Auth.create(accessKey, secretKey);
             String upToken = auth.uploadToken(bucket, key, expireSeconds, null);
-            Response response = uploadManager.put(inputStream, key, upToken, null, null);
-        } catch (IOException e) {
+            Response response = uploadManager.put(bytes, key, upToken);
+        }catch (IOException e) {
             throw new KnownException(ExceptionEnum.FILE_IO_EXCEPTION);
         }
         return baseUrl + key;

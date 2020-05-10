@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.applet.mapper.CommentMapper">
+
+    <resultMap id="commentInfo" type="com.applet.bean.vo.CommentSimpleInfo">
+        <id property="id" column="id" />
+        <association property="user" column="user_id" select="getUserInfo" />
+    </resultMap>
+
+    <select id="getDealedCommentSimpleInfos" resultMap="commentInfo">
+        select id,title, left(content,10) introduction,type,day,status,user_id from comment
+         where community_id=#{id} and status = 2
+        <if test="type!=null">
+            and type = #{type}
+        </if>
+        <if test="timeRange!=null">
+            and #{timeRange}>TO_DAYS(NOW())-TO_DAYS(day)
+        </if>
+    </select>
+
+    <select id="getUnDealedCommentSimpleInfos" resultMap="commentInfo">
+         select id,title,left(content,10) introduction,type,day,status,user_id from comment where
+         community_id=#{id} and status!=2
+        <if test="type!=null">
+            and type = #{type}
+        </if>
+        <if test="timeRange!=null">
+            and #{timeRange}>TO_DAYS(NOW())-TO_DAYS(day)
+        </if>
+    </select>
+
+    <select id="getUserInfo" resultType="com.applet.bean.entity.User">
+        select name,gender from user where id = #{id}
+    </select>
+
+    <select id="getMyCommentSimpleInfos" resultMap="commentInfo">
+       select id,title,left(content,10) introduction,type,day,status,user_id from comment where user_id=#{userId}
+       <if test="type!=null">
+           and type = #{type}
+       </if>
+       <if test="timeRange!=null">
+           and #{timeRange}>TO_DAYS(NOW())-TO_DAYS(day)
+       </if>
+    </select>
+
+    <!--详细信息-->
+
+    <resultMap id="commentDetailInfo" type="com.applet.bean.vo.CommentDetailInfo">
+        <id property="id" column="id" />
+        <association property="replyList" column="id" select="listReply" />
+    </resultMap>
+
+    <select id="listReply" resultType="com.applet.bean.vo.ReplyInfo">
+        select * from reply where comment_id=#{id}
+    </select>
+
+    <select id="getCommentDetailInfo" resultMap="commentDetailInfo">
+        select id,title,content,phone,day,status,user_id,admin_id
+        from comment where id = #{id}
+    </select>
+</mapper>

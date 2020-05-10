@@ -5,6 +5,8 @@ import com.applet.bean.entity.Admin;
 import com.applet.bean.entity.User;
 import com.applet.bean.vo.AdminDetailInfo;
 import com.applet.bean.vo.AdminSimpleInfo;
+import com.applet.common.KnownException;
+import com.applet.enums.ExceptionEnum;
 import com.applet.mapper.AdminMapper;
 import com.applet.mapper.UserMapper;
 import com.applet.service.AdminService;
@@ -15,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -43,7 +46,11 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         admin.setEmail(user.getEmail());
         admin.setName(user.getName());
         admin.setCommunityId(RequestUtils.getCurrentCommunityId());
-        admin.setPhoto(QiniuUtils.uploadPhoto(adminAddInfo.getFile(),"avatar_"+id));
+        try {
+            admin.setPhoto(QiniuUtils.uploadPhoto(adminAddInfo.getFile().getBytes(),"avatar_"+id));
+        } catch (IOException e) {
+            throw new KnownException(ExceptionEnum.FILE_IO_EXCEPTION);
+        }
         if (adminMapper.insert(admin)>0){
             return true;
         }

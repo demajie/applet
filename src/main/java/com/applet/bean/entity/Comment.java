@@ -40,7 +40,7 @@ public class Comment implements Serializable {
     @ApiModelProperty("联系方式")
     private String phone;
 
-    @ApiModelProperty("发布日期")
+    @ApiModelProperty("留言日期")
     private Date day;
 
     @ApiModelProperty("用户id")

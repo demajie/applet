@@ -67,4 +67,5 @@ public class MessageController {
     public JsonWrapper<List<MessageInfo>> getDayMessage(){
         return new JsonWrapper<>(messageService.getDayMessage());
     }
+
 }

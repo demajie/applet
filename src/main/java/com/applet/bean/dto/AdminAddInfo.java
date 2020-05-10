@@ -4,6 +4,7 @@ package com.applet.bean.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.Serializable;
@@ -37,5 +38,5 @@ public class AdminAddInfo implements Serializable {
     private String fixedPhone;
 
     @ApiModelProperty("管理员照片")
-    private File file;
+    private MultipartFile file;
 }

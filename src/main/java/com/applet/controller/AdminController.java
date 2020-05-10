@@ -18,7 +18,7 @@ import java.util.List;
  * @author gsj
  */
 
-@Api(tags = "管理员行为")
+@Api(tags = "管理员行为api")
 @RestController
 @RequestMapping("api/admin")
 public class AdminController {
