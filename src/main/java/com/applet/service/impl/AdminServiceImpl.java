@@ -39,6 +39,12 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
      */
     @Override
     public Boolean addAdmin(AdminAddInfo adminAddInfo) {
+        if (RequestUtils.getCurrentPermId()!=2){
+            throw new KnownException(ExceptionEnum.NO_PERMISSION);
+        }
+        if (QiniuUtils.checkPictureFormat(adminAddInfo.getFile().getOriginalFilename())){
+            throw new KnownException(ExceptionEnum.ERROR_IMAGE_FORMAT);
+        }
         Integer id = adminAddInfo.getId();
         User user = userMapper.selectById(id);
         Admin admin = new Admin();
@@ -62,12 +68,18 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
      */
     @Override
     public Boolean deleteAdmin(Integer id) {
+        if (RequestUtils.getCurrentPermId()!=2){
+            throw new KnownException(ExceptionEnum.NO_PERMISSION);
+        }
         adminMapper.deleteById(id);
         return true;
     }
 
     @Override
     public Boolean updateState(Integer id,Integer state) {
+        if (RequestUtils.getCurrentPermId()!=1){
+            throw new KnownException(ExceptionEnum.NO_PERMISSION);
+        }
         Admin admin = adminMapper.selectById(id);
         admin.setState(state);
         adminMapper.updateById(admin);

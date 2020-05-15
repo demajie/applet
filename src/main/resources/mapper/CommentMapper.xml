@@ -9,7 +9,7 @@
 
     <select id="getDealedCommentSimpleInfos" resultMap="commentInfo">
         select id,title, left(content,10) introduction,type,day,status,user_id from comment
-         where community_id=#{id} and status = 2
+         where community_id=#{communityId} and status = 2
         <if test="type!=null">
             and type = #{type}
         </if>
@@ -19,8 +19,8 @@
     </select>
 
     <select id="getUnDealedCommentSimpleInfos" resultMap="commentInfo">
-         select id,title,left(content,10) introduction,type,day,status,user_id from comment where
-         community_id=#{id} and status!=2
+         select id,title,left(content,10) introduction,type,day,status,user_id,admin_id from comment where
+         community_id=#{communityId} and status!=2
         <if test="type!=null">
             and type = #{type}
         </if>

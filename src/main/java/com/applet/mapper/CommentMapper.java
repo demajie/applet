@@ -19,14 +19,14 @@ public interface CommentMapper extends BaseMapper<Comment> {
     /**
      *  查询社区内【已办理】留言简单信息
      */
-    List<CommentSimpleInfo> getDealedCommentSimpleInfos(Integer communityId,@Param("type") String type,
+    List<CommentSimpleInfo> getDealedCommentSimpleInfos(@Param("communityId") Integer communityId,@Param("type") String type,
                                                         @Param("timeRange") Integer timeRange);
 
 
     /**
      * 根据条件查询社区内【待办理】留言简单信息
      */
-    List<CommentSimpleInfo> getUnDealedCommentSimpleInfos(Integer communityId,@Param("type") String type,
+    List<CommentSimpleInfo> getUnDealedCommentSimpleInfos(@Param("communityId") Integer communityId,@Param("type") String type,
                                                           @Param("timeRange") Integer timeRange);
 
     /**

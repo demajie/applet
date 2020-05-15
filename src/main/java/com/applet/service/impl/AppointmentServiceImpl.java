@@ -5,6 +5,8 @@ import com.applet.bean.dto.AppointmentAddInfo;
 import com.applet.bean.entity.Appointment;
 import com.applet.bean.entity.User;
 import com.applet.bean.vo.AppointmentInfo;
+import com.applet.common.KnownException;
+import com.applet.enums.ExceptionEnum;
 import com.applet.mapper.AppointmentMapper;
 import com.applet.mapper.UserMapper;
 import com.applet.service.AppointmentService;
@@ -53,16 +55,25 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
 
     @Override
     public List<AppointmentInfo> getAllAppointments(Integer userId) {
+        if (RequestUtils.getCurrentPermId()!=1){
+            throw new KnownException(ExceptionEnum.NO_PERMISSION);
+        }
         return appointmentMapper.getAllAppointments(1);
     }
 
     @Override
     public List<AppointmentInfo> getTodayAppointments(Integer userId) {
+        if (RequestUtils.getCurrentPermId()!=1){
+            throw new KnownException(ExceptionEnum.NO_PERMISSION);
+        }
         return appointmentMapper.getTodayAppointments(1);
     }
 
     @Override
     public Boolean acceptAppointment(Integer id) {
+        if (RequestUtils.getCurrentPermId()!=1){
+            throw new KnownException(ExceptionEnum.NO_PERMISSION);
+        }
         Appointment appointment = appointmentMapper.selectById(id);
         appointment.setStatus(1);
         appointmentMapper.updateById(appointment);
@@ -80,7 +91,9 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
 
     @Override
     public Boolean refuseAppointment(Integer id) {
-
+        if (RequestUtils.getCurrentPermId() != 1){
+            throw new KnownException(ExceptionEnum.NO_PERMISSION);
+        }
         Appointment appointment = appointmentMapper.selectById(id);
         appointment.setStatus(2);
         appointmentMapper.updateById(appointment);

@@ -7,6 +7,8 @@ import com.applet.bean.entity.Reply;
 import com.applet.bean.vo.AdminDetailInfo;
 import com.applet.bean.vo.CommentDetailInfo;
 import com.applet.bean.vo.CommentSimpleInfo;
+import com.applet.common.KnownException;
+import com.applet.enums.ExceptionEnum;
 import com.applet.mapper.AdminMapper;
 import com.applet.mapper.CommentMapper;
 import com.applet.mapper.ReplyMapper;
@@ -58,6 +60,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     public Boolean addReply(ReplyAddInfo addInfo) {
+        if (RequestUtils.getCurrentPermId()!=1){
+            throw new KnownException(ExceptionEnum.NO_PERMISSION);
+        }
         /**
          * 添加回复
          */
@@ -90,6 +95,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         List<CommentSimpleInfo> commentSimpleInfos = commentMapper.getUnDealedCommentSimpleInfos(communityId,CommentUtils.getType(typeId),CommentUtils.getTimeRange(timeRangeId));
         for (CommentSimpleInfo commentSimpleInfo:commentSimpleInfos){
             commentSimpleInfo.setFirstName(CommentUtils.getFirstName(commentSimpleInfo.getUser()));
+            commentSimpleInfo.setCanDeal(CommentUtils.hasPriorityToDeal(commentSimpleInfo));
         }
         return commentSimpleInfos;
     }
@@ -110,7 +116,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         Integer adminId = detailInfo.getAdminId();
         detailInfo.setName(userMapper.selectById(userId).getName());
         detailInfo.setAdminName(adminMapper.selectById(adminId).getName());
-        //  detailInfo.setAddress();
+        detailInfo.setAddress(RequestUtils.getAddressByUserId(userId));
         return detailInfo;
     }
 

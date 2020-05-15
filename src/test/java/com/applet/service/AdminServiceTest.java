@@ -32,7 +32,7 @@ public class AdminServiceTest {
         info.setOfficeLocation("海南省");
         info.setPolitic("党员");
         info.setPosition("党委书记");
-        info.setFile(new File("D:/p2.png"));
+//        info.setFile(new File("D:/p2.png"));
         adminService.addAdmin(info);
     }
 

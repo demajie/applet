@@ -42,4 +42,10 @@ public class CommentSimpleInfo implements Serializable {
 
     @ApiModelProperty(hidden = true)
     private User user;
+
+    @ApiModelProperty("被哪个管理员办理,默认为0")
+    private Integer adminId;
+
+    @ApiModelProperty("管理员是否有权限办理,1代表有,0则不能")
+    private Integer canDeal;
 }

@@ -56,8 +56,8 @@ public class CommentServiceTest {
      */
     @Test
     public void test3() {
-//        List<CommentSimpleInfo> list = commentService.getUnDealedCommentSimpleInfos(1);
-//        System.out.println(list);
+        List<CommentSimpleInfo> list = commentService.getUnDealedCommentSimpleInfos(1,null,null);
+        System.out.println(list);
     }
 
     /**
