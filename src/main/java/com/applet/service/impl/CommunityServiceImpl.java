@@ -30,7 +30,7 @@ public class CommunityServiceImpl extends ServiceImpl<CommunityMapper, Community
             String numbers = RandomUtil.randomNumbers(6);
             id = Integer.parseInt(numbers);
             community = getById(id);
-        } while (community == null);
+        } while (community != null);
 
         //创建社区
         Community community1 = Community.builder().id(id)

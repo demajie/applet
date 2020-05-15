@@ -4,6 +4,8 @@ import com.applet.bean.dto.SuperAdminAddInfo;
 import com.applet.bean.dto.UserAddInfo;
 import com.applet.bean.entity.User;
 import com.applet.bean.vo.LoginInfo;
+import com.applet.common.KnownException;
+import com.applet.enums.ExceptionEnum;
 import com.applet.mapper.UserMapper;
 import com.applet.service.UserService;
 import com.applet.utils.RequestUtils;
@@ -51,6 +53,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public Boolean saveSuperAdminInfo(SuperAdminAddInfo info) {
+        User user1 = getById(info.getId());
+        if (user1 != null) {
+            throw new KnownException(ExceptionEnum.EXIST_USER);
+        }
         User user = User.builder().id(info.getId())
                 .permId(2)
                 .name(info.getName())

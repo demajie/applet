@@ -1,23 +1,18 @@
 package com.applet.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author LuckyCurve
- * @date 2020/5/15 22:58
+ * @date 2020/5/16 0:22
  */
 @Configuration
-public class WebMvcConfig extends WebMvcConfigurationSupport {
+public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
-    protected void addFormatters(FormatterRegistry registry) {
+    public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new DateConverter());
     }
 }

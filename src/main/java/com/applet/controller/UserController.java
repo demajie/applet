@@ -49,6 +49,7 @@ public class UserController {
     }
 
     @GetMapping("getCurrentAddress")
+    @ApiOperation("普通用户获取当前住址，超级管理员不可用")
     public JsonWrapper<String> getCurrentAddress() {
         return new JsonWrapper<>(userService.getCurrentAddress());
     }

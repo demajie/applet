@@ -15,6 +15,7 @@ public enum ExceptionEnum {
      *  异常码 > 0 为 内部异常
      *  异常码 < 0 为 外部异常,应有调用者处理
      */
+    EXIST_USER(60,"用户已经存在"),
     TO_BE_IMPLEMENTED(55,"该功能待实现"),
     FILE_IO_EXCEPTION(58,"IO异常"),
     DATE_CONVERT_ERROR(66,"日期转换异常"),
