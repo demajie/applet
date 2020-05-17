@@ -5,6 +5,7 @@ import com.applet.bean.dto.SuperAdminAddInfo;
 import com.applet.bean.dto.UserAddInfo;
 import com.applet.bean.vo.LoginInfo;
 import com.applet.common.JsonWrapper;
+import com.applet.service.IdMapperService;
 import com.applet.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -28,9 +29,19 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    IdMapperService idMapperService;
+
+    @GetMapping("convert")
+    @ApiOperation("用户openid转换转换成整型")
+    @ApiImplicitParam(name = "openId",value = "用户openId",dataType = "String")
+    public JsonWrapper<Integer> convert(String openId) {
+        return new JsonWrapper<>(idMapperService.convert(openId));
+    }
+
     @GetMapping("isLogin")
     @ApiOperation("判断用户是否登录过，如果登录了并返回用户级别")
-    @ApiImplicitParam(name = "userId",value = "用户id")
+    @ApiImplicitParam(name = "userId",value = "用户id",dataType = "Integer")
     public JsonWrapper<LoginInfo> lsLogin(Integer userId) {
         return new JsonWrapper<>(userService.lsLogin(userId));
     }
