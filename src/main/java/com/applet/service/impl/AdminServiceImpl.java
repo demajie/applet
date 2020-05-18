@@ -47,6 +47,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         }
         Integer id = adminAddInfo.getId();
         User user = userMapper.selectById(id);
+        if(user==null) {
+            throw new KnownException(ExceptionEnum.USER_NOT_EXIST);
+        }
         user.setPermId(1);
         userMapper.updateById(user);
         Admin admin = new Admin();
