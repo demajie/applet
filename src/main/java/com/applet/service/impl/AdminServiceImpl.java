@@ -47,6 +47,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         }
         Integer id = adminAddInfo.getId();
         User user = userMapper.selectById(id);
+        user.setPermId(1);
         Admin admin = new Admin();
         BeanUtils.copyProperties(adminAddInfo,admin);
         admin.setEmail(user.getEmail());
