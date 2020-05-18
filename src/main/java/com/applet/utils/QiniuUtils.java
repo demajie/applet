@@ -46,7 +46,7 @@ public class QiniuUtils {
      * @param key: 文件在七牛云中的存储索引
      */
     public static String uploadPhoto(byte[] bytes,String key) {
-        Configuration cfg = new Configuration(Region.region0());
+        Configuration cfg = new Configuration(Region.region2());
         UploadManager uploadManager = new UploadManager(cfg);
         try {
             Auth auth = Auth.create(accessKey, secretKey);
@@ -71,5 +71,4 @@ public class QiniuUtils {
         }
         return false;
     }
-
 }

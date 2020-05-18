@@ -26,13 +26,13 @@ public class AdminServiceTest {
     @Test
     public void test1() {
         AdminAddInfo info = new AdminAddInfo();
-        info.setId(2);
+        info.setId(123);
         info.setJobDuty("tqltql");
         info.setFixedPhone("21132");
         info.setOfficeLocation("海南省");
         info.setPolitic("党员");
         info.setPosition("党委书记");
-//        info.setFile(new File("D:/p2.png"));
+
         adminService.addAdmin(info);
     }
 
