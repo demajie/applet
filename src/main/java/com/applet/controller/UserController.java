@@ -41,7 +41,7 @@ public class UserController {
 
     @GetMapping("isLogin")
     @ApiOperation("判断用户是否登录过，如果登录了并返回用户级别")
-    @ApiImplicitParam(name = "userId",value = "用户id",dataType = "Integer")
+    @ApiImplicitParam(name = "userId",value = "用户id",dataType = "int")
     public JsonWrapper<LoginInfo> lsLogin(Integer userId) {
         return new JsonWrapper<>(userService.lsLogin(userId));
     }
