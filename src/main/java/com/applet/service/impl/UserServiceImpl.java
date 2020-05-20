@@ -31,8 +31,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             level = "超级管理员";
         }
         //存储用户id
+        String sessionId = RequestUtils.getHttpSession().getId();
         RequestUtils.getHttpSession().setAttribute("userId",userId);
-        return LoginInfo.builder().isLogin(1).level(level).build();
+        return LoginInfo.builder().isLogin(1).level(level).jSessionId(sessionId).build();
     }
 
     @Override

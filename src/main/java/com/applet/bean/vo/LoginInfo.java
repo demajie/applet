@@ -25,4 +25,7 @@ public class LoginInfo implements Serializable {
 
     @ApiModelProperty("权限级别，可取值：普通用户，管理员，超级管理员")
     private String level;
+
+    @ApiModelProperty("JSESSIONID")
+    private String jSessionId;
 }
