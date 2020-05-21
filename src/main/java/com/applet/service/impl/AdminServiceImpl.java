@@ -38,7 +38,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
      *  待完善:权限验证
      */
     @Override
-    public Boolean addAdmin(AdminAddInfo adminAddInfo) {
+    public Boolean addAdmin(AdminAddInfo adminAddInfo)  {
         if (RequestUtils.getCurrentPermId()!=2){
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
@@ -46,6 +46,11 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
             throw new KnownException(ExceptionEnum.ERROR_IMAGE_FORMAT);
         }
         Integer id = adminAddInfo.getId();
+
+        if (adminMapper.selectById(id)!=null){
+            throw new KnownException(ExceptionEnum.ADMIN_ALREADY_EXIST);
+        }
+
         User user = userMapper.selectById(id);
         if(user==null) {
             throw new KnownException(ExceptionEnum.USER_NOT_EXIST);
@@ -57,14 +62,12 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         admin.setEmail(user.getEmail());
         admin.setName(user.getName());
         admin.setCommunityId(RequestUtils.getCurrentCommunityId());
-
+        try {
+            admin.setPhoto(QiniuUtils.uploadPhoto(adminAddInfo.getFile().getBytes(),"avatar_"+admin.getId()));
+        } catch (IOException e) {
+            throw new KnownException(ExceptionEnum.FILE_IO_EXCEPTION);
+        }
         if (adminMapper.insert(admin)>0){
-            try {
-                admin.setPhoto(QiniuUtils.uploadPhoto(adminAddInfo.getFile().getBytes(),"avatar_"+admin.getId()));
-                adminMapper.updateById(admin);
-            } catch (IOException e) {
-                throw new KnownException(ExceptionEnum.FILE_IO_EXCEPTION);
-            }
             return true;
         }
         return false;

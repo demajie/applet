@@ -24,7 +24,8 @@ public enum ExceptionEnum {
     NOT_AUTHENTICATE(-2,"用户未认证"),
     NO_PERMISSION(-3, "用户权限不够"),
     ERROR_IMAGE_FORMAT(-4,"图片格式不对"),
-    USER_NOT_EXIST(-5,"该用户不存在")
+    USER_NOT_EXIST(-5,"该用户不存在"),
+    ADMIN_ALREADY_EXIST(-6,"管理员已存在,请勿重复添加")
     ;
     private int errorCode;
     private String errorMsg;

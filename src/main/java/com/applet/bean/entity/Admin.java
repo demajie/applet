@@ -23,7 +23,6 @@ public class Admin implements Serializable {
     private static final long serialVersionUID = -909203054937672055L;
 
     @ApiModelProperty("用户id")
-    @TableId(type = IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty("姓名")
