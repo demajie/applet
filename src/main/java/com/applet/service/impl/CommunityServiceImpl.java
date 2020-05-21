@@ -39,8 +39,7 @@ public class CommunityServiceImpl extends ServiceImpl<CommunityMapper, Community
                 .build();
 
         //绑定用户
-        //Integer userId = RequestUtils.getCurrentUserId();
-        Integer userId = communityAddInfo.getId();
+        Integer userId = RequestUtils.getCurrentUserId();
         User user = userService.getById(userId);
         user.setCommunityId(id);
 

@@ -26,7 +26,4 @@ public class CommunityAddInfo implements Serializable {
 
     @ApiModelProperty("社区地址")
     private String address;
-
-    @ApiModelProperty("用户id")
-    private Integer id;
 }
