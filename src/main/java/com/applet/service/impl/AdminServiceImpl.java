@@ -57,12 +57,13 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         admin.setEmail(user.getEmail());
         admin.setName(user.getName());
         admin.setCommunityId(RequestUtils.getCurrentCommunityId());
-        try {
-            admin.setPhoto(QiniuUtils.uploadPhoto(adminAddInfo.getFile().getBytes(),"avatar_"+id));
-        } catch (IOException e) {
-            throw new KnownException(ExceptionEnum.FILE_IO_EXCEPTION);
-        }
+
         if (adminMapper.insert(admin)>0){
+            try {
+                admin.setPhoto(QiniuUtils.uploadPhoto(adminAddInfo.getFile().getBytes(),"avatar_"+admin.getId()));
+            } catch (IOException e) {
+                throw new KnownException(ExceptionEnum.FILE_IO_EXCEPTION);
+            }
             return true;
         }
         return false;
