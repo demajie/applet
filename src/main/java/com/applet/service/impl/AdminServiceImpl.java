@@ -61,6 +61,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         if (adminMapper.insert(admin)>0){
             try {
                 admin.setPhoto(QiniuUtils.uploadPhoto(adminAddInfo.getFile().getBytes(),"avatar_"+admin.getId()));
+                adminMapper.updateById(admin);
             } catch (IOException e) {
                 throw new KnownException(ExceptionEnum.FILE_IO_EXCEPTION);
             }
