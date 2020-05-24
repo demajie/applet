@@ -26,8 +26,8 @@ public class BuildingController {
     BuildingService buildingService;
 
     @ApiOperation("创建楼栋")
-    @PostMapping(value = "create")
-    public JsonWrapper<Boolean> create(List<BuildingAddInfo> infoList) {
+    @GetMapping(value = "create")
+    public JsonWrapper<Boolean> create(BuildingAddInfo infoList) {
         return new JsonWrapper<>(buildingService.create(infoList));
     }
 

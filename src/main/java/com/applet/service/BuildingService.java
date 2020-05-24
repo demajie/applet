@@ -16,7 +16,7 @@ public interface BuildingService extends IService<Building> {
      * 创建楼栋，并通过用户的community_id绑定到对应社区
      * 并调用单元创建方法，与该楼栋绑定
      */
-    Boolean create(List<BuildingAddInfo> num);
+    Boolean create(BuildingAddInfo num);
 
     /**
      * 获取当前社区所有楼栋信息

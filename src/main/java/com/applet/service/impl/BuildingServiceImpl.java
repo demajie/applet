@@ -28,23 +28,21 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
     UnitService unitService;
 
     @Override
-    public Boolean create(List<BuildingAddInfo> num) {
+    public Boolean create(BuildingAddInfo info) {
 
         Integer communityId = RequestUtils.getCurrentCommunityId();
 
-        for (BuildingAddInfo info : num) {
-            //创建楼栋
-            Building building = Building.builder().name(info.getName()).communityId(communityId).build();
-            save(building);
+        //创建楼栋
+        Building building = Building.builder().name(info.getName()).communityId(communityId).build();
+        save(building);
 
-            //循环创建所属楼栋的单元
-            List<Unit> units = new LinkedList<>();
-            for (int i = 0; i < info.getNum(); i++) {
-                Unit unit = Unit.builder().buildingId(building.getId()).name(String.valueOf(i + 1)).build();
-                units.add(unit);
-            }
-            unitService.saveBatch(units);
+        //循环创建所属楼栋的单元
+        List<Unit> units = new LinkedList<>();
+        for (int i = 0; i < info.getNum(); i++) {
+            Unit unit = Unit.builder().buildingId(building.getId()).name(String.valueOf(i + 1)).build();
+            units.add(unit);
         }
+        unitService.saveBatch(units);
 
         return true;
     }
@@ -52,7 +50,7 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
     @Override
     public List<BuildingInfo> getAll() {
         QueryWrapper<Building> wrapper = new QueryWrapper<>();
-        wrapper.eq("community_id",RequestUtils.getCurrentCommunityId());
+        wrapper.eq("community_id", RequestUtils.getCurrentCommunityId());
         List<Building> list = list(wrapper);
         LinkedList<BuildingInfo> list1 = new LinkedList<>();
         for (Building i : list) {
