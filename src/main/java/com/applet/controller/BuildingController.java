@@ -26,8 +26,8 @@ public class BuildingController {
     BuildingService buildingService;
 
     @ApiOperation("创建楼栋")
-    @PostMapping(value = "create",consumes = "application/x-www-form-urlencoded;charset=utf-8")
-    public JsonWrapper<Boolean> create(@RequestBody List<BuildingAddInfo> infoList) {
+    @PostMapping(value = "create")
+    public JsonWrapper<Boolean> create(List<BuildingAddInfo> infoList) {
         return new JsonWrapper<>(buildingService.create(infoList));
     }
 
