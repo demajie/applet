@@ -41,8 +41,8 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
     public Boolean addAppointment(AppointmentAddInfo appointmentInfo) {
         Appointment appointment = new Appointment();
         BeanUtils.copyProperties(appointmentInfo,appointment);
-        Integer userId = 4;
-        User user = userMapper.selectById(4);
+        Integer userId = RequestUtils.getCurrentUserId();
+        User user = userMapper.selectById(userId);
         appointment.setUserId(userId);
         appointment.setName(user.getName());
         appointment.setTimeRange(DateUtils.getTimeRange(appointmentInfo.getTimeRangeId()));
