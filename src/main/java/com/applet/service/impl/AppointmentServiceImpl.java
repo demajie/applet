@@ -58,7 +58,7 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
         if (RequestUtils.getCurrentPermId()!=1){
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
-        return appointmentMapper.getAllAppointments(1);
+        return appointmentMapper.getAllAppointments(RequestUtils.getCurrentUserId());
     }
 
     @Override
@@ -66,7 +66,7 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
         if (RequestUtils.getCurrentPermId()!=1){
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
-        return appointmentMapper.getTodayAppointments(1);
+        return appointmentMapper.getTodayAppointments(RequestUtils.getCurrentUserId());
     }
 
     @Override
