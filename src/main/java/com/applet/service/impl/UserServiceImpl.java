@@ -1,7 +1,8 @@
 package com.applet.service.impl;
 
 import com.applet.bean.dto.SuperAdminAddInfo;
-import com.applet.bean.dto.UserAddInfo;
+import com.applet.bean.dto.UserAddBaseInfo;
+import com.applet.bean.dto.UserAddressInfo;
 import com.applet.bean.entity.User;
 import com.applet.bean.vo.LoginInfo;
 import com.applet.common.KnownException;
@@ -10,6 +11,7 @@ import com.applet.mapper.UserMapper;
 import com.applet.service.UserService;
 import com.applet.utils.RequestUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,17 +39,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public Boolean saveUser(UserAddInfo userAddInfo) {
-        User user = User.builder().id(userAddInfo.getAppId())
-                .birthday(userAddInfo.getBirthday())
-                .email(userAddInfo.getEmail())
-                .buildingId(userAddInfo.getBuildingId())
-                .gender(userAddInfo.getGender())
-                .communityId(userAddInfo.getCommunityId())
-                .name(userAddInfo.getName())
-                .houseNum(userAddInfo.getHouseNum())
-                .unitId(userAddInfo.getUnitId())
-                .permId(0).build();
+    public Boolean saveUser(UserAddBaseInfo userAddInfo) {
+        User user = new User();
+        BeanUtils.copyProperties(userAddInfo,user);
+        user.setId(userAddInfo.getAppId());
+        user.setPermId(0);
         RequestUtils.getHttpSession().setAttribute("userId",userAddInfo.getAppId());
         return save(user);
     }
@@ -71,5 +67,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public String getCurrentAddress() {
         return RequestUtils.getCurrentAddress();
+    }
+
+    @Override
+    public Boolean saveAddressInfo(UserAddressInfo userAddressInfo) {
+        Integer userId = RequestUtils.getCurrentUserId();
+        User user = new User();
+        BeanUtils.copyProperties(userAddressInfo,user);
+        user.setId(userId);
+        return updateById(user);
     }
 }

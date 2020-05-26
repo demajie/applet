@@ -2,7 +2,8 @@ package com.applet.controller;
 
 
 import com.applet.bean.dto.SuperAdminAddInfo;
-import com.applet.bean.dto.UserAddInfo;
+import com.applet.bean.dto.UserAddBaseInfo;
+import com.applet.bean.dto.UserAddressInfo;
 import com.applet.bean.vo.LoginInfo;
 import com.applet.common.JsonWrapper;
 import com.applet.service.IdMapperService;
@@ -48,8 +49,14 @@ public class UserController {
 
     @GetMapping("saveUser")
     @ApiOperation("加入社区，登记用户基本信息")
-    public JsonWrapper<Boolean> saveUser(UserAddInfo userAddInfo) {
-        return new JsonWrapper<>(userService.saveUser(userAddInfo));
+    public JsonWrapper<Boolean> saveUser(UserAddBaseInfo userAddBaseInfo) {
+        return new JsonWrapper<>(userService.saveUser(userAddBaseInfo));
+    }
+
+    @GetMapping("saveAddressInfo")
+    @ApiOperation("填写用户住址信息")
+    public JsonWrapper<Boolean> saveAddressInfo(UserAddressInfo userAddressInfo) {
+        return new JsonWrapper<>(userService.saveAddressInfo(userAddressInfo));
     }
 
 

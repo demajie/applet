@@ -21,5 +21,5 @@ public interface BuildingService extends IService<Building> {
     /**
      * 获取当前社区所有楼栋信息
      */
-    List<BuildingInfo> getAll();
+    List<BuildingInfo> getAll(Integer communityId);
 }

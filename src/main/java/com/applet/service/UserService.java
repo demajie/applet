@@ -2,7 +2,8 @@ package com.applet.service;
 
 
 import com.applet.bean.dto.SuperAdminAddInfo;
-import com.applet.bean.dto.UserAddInfo;
+import com.applet.bean.dto.UserAddBaseInfo;
+import com.applet.bean.dto.UserAddressInfo;
 import com.applet.bean.entity.User;
 import com.applet.bean.vo.LoginInfo;
 import com.applet.bean.vo.MessageInfo;
@@ -19,7 +20,7 @@ public interface UserService extends IService<User> {
     /**
      * 保存用户信息
      */
-    Boolean saveUser(UserAddInfo userAddInfo);
+    Boolean saveUser(UserAddBaseInfo userAddBaseInfo);
 
 
     /**
@@ -28,4 +29,6 @@ public interface UserService extends IService<User> {
     Boolean saveSuperAdminInfo(SuperAdminAddInfo info);
 
     String getCurrentAddress();
+
+    Boolean saveAddressInfo(UserAddressInfo userAddressInfo);
 }

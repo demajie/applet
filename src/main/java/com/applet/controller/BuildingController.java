@@ -33,8 +33,9 @@ public class BuildingController {
 
     @ApiOperation("查看当前社区所有楼栋")
     @GetMapping("getAll")
-    public JsonWrapper<List<BuildingInfo>> getAll() {
-        return new JsonWrapper<>(buildingService.getAll());
+    @ApiImplicitParam(name = "communityId",value = "社区Id",dataType = "int")
+    public JsonWrapper<List<BuildingInfo>> getAll(Integer communityId) {
+        return new JsonWrapper<>(buildingService.getAll(communityId));
     }
 
 }

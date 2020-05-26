@@ -48,9 +48,9 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
     }
 
     @Override
-    public List<BuildingInfo> getAll() {
+    public List<BuildingInfo> getAll(Integer communityId) {
         QueryWrapper<Building> wrapper = new QueryWrapper<>();
-        wrapper.eq("community_id", RequestUtils.getCurrentCommunityId());
+        wrapper.eq("community_id", communityId);
         List<Building> list = list(wrapper);
         LinkedList<BuildingInfo> list1 = new LinkedList<>();
         for (Building i : list) {
