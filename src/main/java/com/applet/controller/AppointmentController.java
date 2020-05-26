@@ -35,28 +35,28 @@ public class AppointmentController {
 
     @ApiOperation("管理员查看所有预约")
     @GetMapping("getAllAppointments")
-    @ApiImplicitParam(name = "id",value = "管理员id", dataType = "Integer")
+    @ApiImplicitParam(name = "id",value = "管理员id", dataType = "int")
     public JsonWrapper<List<AppointmentInfo>> getAllAppointments(Integer id) {
         return new JsonWrapper<>(appointmentService.getAllAppointments(id));
     }
 
     @ApiOperation("管理员查看今天的所有预约")
     @GetMapping("getTodayAppointments")
-    @ApiImplicitParam(name = "id",value = "管理员id", dataType = "Integer")
+    @ApiImplicitParam(name = "id",value = "管理员id", dataType = "int")
     public JsonWrapper<List<AppointmentInfo>> getTodayAppointments(Integer id) {
         return new JsonWrapper<>(appointmentService.getTodayAppointments(id));
     }
 
     @ApiOperation("管理员拒绝预约")
     @PostMapping("refuseAppointment")
-    @ApiImplicitParam(name = "id",value = "预约事件id", dataType = "Integer")
+    @ApiImplicitParam(name = "id",value = "预约事件id", dataType = "int")
     public JsonWrapper<Boolean> refuseAppointment(Integer id) {
         return new JsonWrapper<>(appointmentService.refuseAppointment(id));
     }
 
     @ApiOperation("管理员同意预约")
     @PostMapping("acceptAppointment")
-    @ApiImplicitParam(name = "id",value = "预约事件id", dataType = "Integer")
+    @ApiImplicitParam(name = "id",value = "预约事件id", dataType = "int")
     public JsonWrapper<Boolean> acceptAppointment(Integer id) {
         return new JsonWrapper<>(appointmentService.acceptAppointment(id));
     }
