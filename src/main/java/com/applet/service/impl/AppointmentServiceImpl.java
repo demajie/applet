@@ -35,19 +35,19 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
     UserMapper userMapper;
 
     /**
-     *  添加预约
+     * 添加预约
      */
     @Override
     public Boolean addAppointment(AppointmentAddInfo appointmentInfo) {
         Appointment appointment = new Appointment();
-        BeanUtils.copyProperties(appointmentInfo,appointment);
+        BeanUtils.copyProperties(appointmentInfo, appointment);
         Integer userId = RequestUtils.getCurrentUserId();
         User user = userMapper.selectById(userId);
         appointment.setUserId(userId);
         appointment.setName(user.getName());
         appointment.setTimeRange(DateUtils.getTimeRange(appointmentInfo.getTimeRangeId()));
         appointment.setDay(DateUtils.strToDate(appointmentInfo.getDay()));
-        if (appointmentMapper.insert(appointment)>0){
+        if (appointmentMapper.insert(appointment) > 0) {
             return true;
         }
         return false;
@@ -55,43 +55,48 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
 
     @Override
     public List<AppointmentInfo> getAllAppointments(Integer userId) {
-        if (RequestUtils.getCurrentPermId()!=1 || RequestUtils.getCurrentPermId()!=2){
+        if (RequestUtils.getCurrentPermId() == 1 || RequestUtils.getCurrentPermId() == 2) {
+            return appointmentMapper.getAllAppointments(RequestUtils.getCurrentUserId());
+        } else {
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
-        return appointmentMapper.getAllAppointments(RequestUtils.getCurrentUserId());
     }
 
     @Override
     public List<AppointmentInfo> getTodayAppointments(Integer userId) {
-        if (RequestUtils.getCurrentPermId()!=1 || RequestUtils.getCurrentPermId()!=2){
+        if (RequestUtils.getCurrentPermId() == 1 || RequestUtils.getCurrentPermId() == 2) {
+            return appointmentMapper.getTodayAppointments(RequestUtils.getCurrentUserId());
+        } else {
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
-        return appointmentMapper.getTodayAppointments(RequestUtils.getCurrentUserId());
+
     }
 
     @Override
     public Boolean acceptAppointment(Integer id) {
-        if (RequestUtils.getCurrentPermId()!=1 || RequestUtils.getCurrentPermId()!=2){
+        if (RequestUtils.getCurrentPermId() == 1 || RequestUtils.getCurrentPermId() == 2) {
+            Appointment appointment = appointmentMapper.selectById(id);
+            appointment.setStatus(1);
+            appointmentMapper.updateById(appointment);
+            String email = userMapper.selectById(appointment.getUserId()).getEmail();
+            /**
+             *  发送邮件通知用户预约成功
+             */
+            new Thread(() -> {
+                MailUtils.sendMail(email, "预约成功", "您的预约已成功");
+                System.out.println("发往" + email + "的邮件成功");
+            }).start();
+
+            return true;
+        }else{
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
-        Appointment appointment = appointmentMapper.selectById(id);
-        appointment.setStatus(1);
-        appointmentMapper.updateById(appointment);
-        String email = userMapper.selectById(appointment.getUserId()).getEmail();
-        /**
-         *  发送邮件通知用户预约成功
-         */
-        new Thread(()->{
-            MailUtils.sendMail(email,"预约成功","您的预约已成功");
-            System.out.println("发往"+email+"的邮件成功");
-        }).start();
 
-        return true;
     }
 
     @Override
     public Boolean refuseAppointment(Integer id) {
-        if (RequestUtils.getCurrentPermId()!=1 || RequestUtils.getCurrentPermId()!=2){
+        if (RequestUtils.getCurrentPermId() != 1 && RequestUtils.getCurrentPermId() != 2) {
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
         Appointment appointment = appointmentMapper.selectById(id);
@@ -101,8 +106,8 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
          *  发送邮件通知用户预约失败
          */
         String email = userMapper.selectById(appointment.getUserId()).getEmail();
-        new Thread(()->{
-            MailUtils.sendMail(email,"预约失败","该时段繁忙,您的预约失败");
+        new Thread(() -> {
+            MailUtils.sendMail(email, "预约失败", "该时段繁忙,您的预约失败");
         }).start();
         return true;
     }
