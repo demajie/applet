@@ -55,7 +55,7 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
 
     @Override
     public List<AppointmentInfo> getAllAppointments(Integer userId) {
-        if (RequestUtils.getCurrentPermId()!=1){
+        if (RequestUtils.getCurrentPermId()!=1 || RequestUtils.getCurrentPermId()!=2){
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
         return appointmentMapper.getAllAppointments(RequestUtils.getCurrentUserId());
@@ -63,7 +63,7 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
 
     @Override
     public List<AppointmentInfo> getTodayAppointments(Integer userId) {
-        if (RequestUtils.getCurrentPermId()!=1){
+        if (RequestUtils.getCurrentPermId()!=1 || RequestUtils.getCurrentPermId()!=2){
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
         return appointmentMapper.getTodayAppointments(RequestUtils.getCurrentUserId());
@@ -71,7 +71,7 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
 
     @Override
     public Boolean acceptAppointment(Integer id) {
-        if (RequestUtils.getCurrentPermId()!=1){
+        if (RequestUtils.getCurrentPermId()!=1 || RequestUtils.getCurrentPermId()!=2){
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
         Appointment appointment = appointmentMapper.selectById(id);
@@ -91,7 +91,7 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
 
     @Override
     public Boolean refuseAppointment(Integer id) {
-        if (RequestUtils.getCurrentPermId() != 1){
+        if (RequestUtils.getCurrentPermId()!=1 || RequestUtils.getCurrentPermId()!=2){
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
         Appointment appointment = appointmentMapper.selectById(id);

@@ -60,7 +60,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     public Boolean addReply(ReplyAddInfo addInfo) {
-        if (RequestUtils.getCurrentPermId()!=1){
+        if (RequestUtils.getCurrentPermId()!=1 || RequestUtils.getCurrentPermId()!=2){
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
         /**
