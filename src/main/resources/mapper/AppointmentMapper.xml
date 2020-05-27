@@ -4,7 +4,7 @@
 
     <select id="getAllAppointments" resultType="com.applet.bean.vo.AppointmentInfo">
         select id,name,phone,day,time_range,content,status from
-        appointment where admin_id=#{id}
+        appointment where admin_id=#{id} and TO_DAYS(day)-TO_DAYS(NOW())>0
     </select>
 
     <select id="getTodayAppointments" resultType="com.applet.bean.vo.AppointmentInfo">
