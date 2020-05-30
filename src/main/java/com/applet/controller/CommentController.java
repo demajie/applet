@@ -61,9 +61,9 @@ public class CommentController {
     @GetMapping("getMyCommentSimpleInfos")
     @ApiOperation("根据条件查询我发布的留言")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "communityId",value = "社区Id",type = "Integer"),
-            @ApiImplicitParam(name = "typeId",value = "类型Id,1饮食,2环境,3服务",type = "Integer"),
-            @ApiImplicitParam(name = "timeRangeId",value = "时间范围id,1一周内,2一月内,3半年内,4一年内",type = "Integer")
+            @ApiImplicitParam(name = "userId",value = "用户id",type = "int"),
+            @ApiImplicitParam(name = "typeId",value = "类型Id,1饮食,2环境,3服务",type = "int"),
+            @ApiImplicitParam(name = "timeRangeId",value = "时间范围id,1一周内,2一月内,3半年内,4一年内",type = "int")
     })
     public JsonWrapper<List<CommentSimpleInfo>> getMyCommentSimpleInfos(Integer userId,Integer typeId,Integer timeRangeId){
         return new JsonWrapper<>(commentService.getMyCommentSimpleInfos(userId, typeId, timeRangeId));
