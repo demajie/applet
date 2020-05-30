@@ -1,7 +1,7 @@
 package com.applet.bean.vo;
 
 import com.applet.bean.entity.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,6 +16,7 @@ import java.util.Date;
 @ApiModel("留言简单信息")
 @Data
 @ToString(exclude = "user")
+@JsonIgnoreProperties(value = "handler")
 public class CommentSimpleInfo implements Serializable {
     private static final long serialVersionUID = 5917225230534125971L;
 

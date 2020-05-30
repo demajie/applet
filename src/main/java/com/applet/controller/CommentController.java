@@ -50,9 +50,9 @@ public class CommentController {
     @GetMapping("getUnDealedCommentSimpleInfos")
     @ApiOperation("根据条件查询社区内【待办理】留言简单信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "communityId",value = "社区Id",type = "Integer"),
-            @ApiImplicitParam(name = "typeId",value = "类型Id,1饮食,2环境,3服务",type = "Integer"),
-            @ApiImplicitParam(name = "timeRangeId",value = "时间范围id,1一周内,2一月内,3半年内,4一年内",type = "Integer")
+            @ApiImplicitParam(name = "communityId",value = "社区Id",type = "int"),
+            @ApiImplicitParam(name = "typeId",value = "类型Id,1饮食,2环境,3服务",type = "int"),
+            @ApiImplicitParam(name = "timeRangeId",value = "时间范围id,1一周内,2一月内,3半年内,4一年内",type = "int")
     })
     public JsonWrapper<List<CommentSimpleInfo>> getUnDealedCommentSimpleInfos(Integer communityId,Integer typeId,Integer timeRangeId){
         return new JsonWrapper<>(commentService.getUnDealedCommentSimpleInfos(communityId, typeId, timeRangeId));
