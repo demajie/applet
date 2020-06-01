@@ -9,6 +9,7 @@ import com.applet.enums.ExceptionEnum;
 import com.applet.mapper.MessageMapper;
 import com.applet.service.MessageService;
 import com.applet.service.UserService;
+import com.applet.utils.MessageInfoUtils;
 import com.applet.utils.RequestUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.injector.methods.DeleteById;
@@ -55,7 +56,7 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
                     .build();
             list.add(info);
         }
-        return list;
+        return MessageInfoUtils.sort(list);
     }
 
     @Override
@@ -78,7 +79,7 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
                     .build();
             list.add(info);
         }
-        return list;
+        return MessageInfoUtils.sort(list);
     }
 
     @Override

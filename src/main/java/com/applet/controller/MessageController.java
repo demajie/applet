@@ -63,7 +63,6 @@ public class MessageController {
 
     @GetMapping("getDayMessage")
     @ApiOperation("普通用户，查询单日消息")
-    @ApiImplicitParam(name = "id",value = "用户的appid",dataType = "Integer")
     public JsonWrapper<List<MessageInfo>> getDayMessage(){
         return new JsonWrapper<>(messageService.getDayMessage());
     }
