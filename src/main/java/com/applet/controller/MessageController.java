@@ -1,10 +1,12 @@
 package com.applet.controller;
 
 
+import com.applet.bean.dto.AnnoConditionInfo;
 import com.applet.bean.dto.AnnoMessageInfo;
 import com.applet.bean.vo.MessageInfo;
 import com.applet.common.JsonWrapper;
 import com.applet.service.MessageService;
+import com.applet.service.MessageUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +28,9 @@ public class MessageController {
 
     @Autowired
     MessageService messageService;
+
+    @Autowired
+    MessageUserService messageUserService;
 
     @GetMapping("annoMessageCommunity")
     @ApiOperation("管理员，发布消息到当前社区")
@@ -52,6 +57,12 @@ public class MessageController {
     @ApiImplicitParam(name = "messageId",value = "消息id")
     public JsonWrapper<Boolean> deleteMessage(Integer messageId) {
         return new JsonWrapper<>(messageService.deleteMessage(messageId));
+    }
+
+    @GetMapping("annoMessageCondition")
+    @ApiOperation("管理员，根据条件发布到User")
+    public JsonWrapper<Boolean> annoMessageCondition(AnnoConditionInfo info) {
+        return new JsonWrapper<>(messageUserService.annoMessageCondition(info));
     }
 
 

@@ -1,5 +1,6 @@
 package com.applet.service;
 
+import com.applet.bean.dto.AnnoConditionInfo;
 import com.applet.bean.dto.AnnoMessageInfo;
 import com.applet.bean.entity.Message;
 import com.applet.bean.vo.MessageInfo;

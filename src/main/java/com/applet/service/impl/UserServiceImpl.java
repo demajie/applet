@@ -12,6 +12,7 @@ import com.applet.service.UserService;
 import com.applet.utils.RequestUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,6 +21,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         implements UserService {
+
+    @Autowired
+    UserMapper userMapper;
+
     @Override
     public LoginInfo lsLogin(Integer userId) {
         User user = getById(userId);
@@ -76,5 +81,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         BeanUtils.copyProperties(userAddressInfo,user);
         user.setId(userId);
         return updateById(user);
+    }
+
+    @Override
+    public Integer countByHouse(String house) {
+        return userMapper.countByHouse(house);
     }
 }

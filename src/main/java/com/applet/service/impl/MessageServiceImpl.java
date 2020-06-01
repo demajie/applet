@@ -1,19 +1,24 @@
 package com.applet.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.applet.bean.dto.AnnoConditionInfo;
 import com.applet.bean.dto.AnnoMessageInfo;
 import com.applet.bean.entity.Message;
+import com.applet.bean.entity.MessageUser;
 import com.applet.bean.entity.User;
 import com.applet.bean.vo.MessageInfo;
 import com.applet.common.KnownException;
 import com.applet.enums.ExceptionEnum;
 import com.applet.mapper.MessageMapper;
 import com.applet.service.MessageService;
+import com.applet.service.MessageUserService;
 import com.applet.service.UserService;
 import com.applet.utils.MessageInfoUtils;
 import com.applet.utils.RequestUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.injector.methods.DeleteById;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +42,9 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
     @Autowired
     UserService userService;
 
+    @Autowired
+    MessageUserService messageUserService;
+
     @Override
     public List<MessageInfo> getAllMessage() {
         Integer userId = RequestUtils.getCurrentUserId();
@@ -56,6 +64,20 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
                     .build();
             list.add(info);
         }
+
+        //插入对用户消息的单独筛选
+        List<MessageUser> list1 = messageUserService.list();
+        for (MessageUser messageUser : list1) {
+            List<Integer> listUser = JSONArray.parseArray(messageUser.getUserList(), Integer.class);
+            if (listUser.contains(userId)){
+                String name = userService.getById(messageUser.getAnnoUser()).getName();
+                MessageInfo messageInfo = new MessageInfo();
+                BeanUtils.copyProperties(messageUser,messageInfo);
+                messageInfo.setAnnoUser(name);
+                list.add(messageInfo);
+            }
+        }
+
         return MessageInfoUtils.sort(list);
     }
 
@@ -79,6 +101,23 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
                     .build();
             list.add(info);
         }
+
+        //插入对用户消息的单独筛选
+        QueryWrapper<MessageUser> wrapper2 = new QueryWrapper<>();
+        wrapper2.gt("anno_time",now);
+        List<MessageUser> list1 = messageUserService.list(wrapper2);
+        for (MessageUser messageUser : list1) {
+            List<Integer> listUser = JSONArray.parseArray(messageUser.getUserList(), Integer.class);
+            if (listUser.contains(userId)){
+                String name = userService.getById(messageUser.getAnnoUser()).getName();
+                MessageInfo messageInfo = new MessageInfo();
+                BeanUtils.copyProperties(messageUser,messageInfo);
+                messageInfo.setAnnoUser(name);
+                list.add(messageInfo);
+            }
+        }
+
+
         return MessageInfoUtils.sort(list);
     }
 
