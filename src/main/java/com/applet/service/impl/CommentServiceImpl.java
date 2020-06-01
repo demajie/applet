@@ -48,7 +48,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Override
     public Boolean addComment(CommentAddInfo commentAddInfo) {
         Comment comment = new Comment();
-        BeanUtils.copyProperties(commentAddInfo,comment);
+        BeanUtils.copyProperties(commentAddInfo, comment);
         comment.setType(CommentUtils.getType(commentAddInfo.getTypeId()));
         comment.setDay(new Date());
         comment.setUserId(RequestUtils.getCurrentUserId());
@@ -60,14 +60,14 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     public Boolean addReply(ReplyAddInfo addInfo) {
-        if (RequestUtils.getCurrentPermId()!=1 && RequestUtils.getCurrentPermId()!=2){
+        if (RequestUtils.getCurrentPermId() != 1 && RequestUtils.getCurrentPermId() != 2) {
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
         /**
          * 添加回复
          */
         Reply reply = new Reply();
-        BeanUtils.copyProperties(addInfo,reply);
+        BeanUtils.copyProperties(addInfo, reply);
         reply.setDay(new Date());
         replyMapper.insert(reply);
 
@@ -82,18 +82,18 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public List<CommentSimpleInfo> getDealedCommentSimpleInfos(Integer communityId,Integer typeId,Integer timeRangeId) {
-        List<CommentSimpleInfo> commentSimpleInfos = commentMapper.getDealedCommentSimpleInfos(communityId,CommentUtils.getType(typeId),CommentUtils.getTimeRange(timeRangeId));
-        for (CommentSimpleInfo commentSimpleInfo:commentSimpleInfos){
+    public List<CommentSimpleInfo> getDealedCommentSimpleInfos(Integer communityId, Integer typeId, Integer timeRangeId) {
+        List<CommentSimpleInfo> commentSimpleInfos = commentMapper.getDealedCommentSimpleInfos(communityId, CommentUtils.getType(typeId), CommentUtils.getTimeRange(timeRangeId));
+        for (CommentSimpleInfo commentSimpleInfo : commentSimpleInfos) {
             commentSimpleInfo.setFirstName(CommentUtils.getFirstName(commentSimpleInfo.getUser()));
         }
         return commentSimpleInfos;
     }
 
     @Override
-    public List<CommentSimpleInfo> getUnDealedCommentSimpleInfos(Integer communityId,Integer typeId,Integer timeRangeId) {
-        List<CommentSimpleInfo> commentSimpleInfos = commentMapper.getUnDealedCommentSimpleInfos(communityId,CommentUtils.getType(typeId),CommentUtils.getTimeRange(timeRangeId));
-        for (CommentSimpleInfo commentSimpleInfo:commentSimpleInfos){
+    public List<CommentSimpleInfo> getUnDealedCommentSimpleInfos(Integer communityId, Integer typeId, Integer timeRangeId) {
+        List<CommentSimpleInfo> commentSimpleInfos = commentMapper.getUnDealedCommentSimpleInfos(communityId, CommentUtils.getType(typeId), CommentUtils.getTimeRange(timeRangeId));
+        for (CommentSimpleInfo commentSimpleInfo : commentSimpleInfos) {
             commentSimpleInfo.setFirstName(CommentUtils.getFirstName(commentSimpleInfo.getUser()));
             commentSimpleInfo.setCanDeal(CommentUtils.hasPriorityToDeal(commentSimpleInfo));
         }
@@ -101,9 +101,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public List<CommentSimpleInfo> getMyCommentSimpleInfos(Integer userId,Integer typeId,Integer timeRangeId) {
-        List<CommentSimpleInfo> commentSimpleInfos = commentMapper.getMyCommentSimpleInfos(userId,CommentUtils.getType(typeId),CommentUtils.getTimeRange(timeRangeId));
-        for (CommentSimpleInfo commentSimpleInfo:commentSimpleInfos){
+    public List<CommentSimpleInfo> getMyCommentSimpleInfos(Integer userId, Integer typeId, Integer timeRangeId) {
+        List<CommentSimpleInfo> commentSimpleInfos = commentMapper.getMyCommentSimpleInfos(userId, CommentUtils.getType(typeId), CommentUtils.getTimeRange(timeRangeId));
+        for (CommentSimpleInfo commentSimpleInfo : commentSimpleInfos) {
             commentSimpleInfo.setFirstName(CommentUtils.getFirstName(commentSimpleInfo.getUser()));
         }
         return commentSimpleInfos;
@@ -115,7 +115,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         Integer userId = detailInfo.getUserId();
         Integer adminId = detailInfo.getAdminId();
         detailInfo.setName(userMapper.selectById(userId).getName());
-        detailInfo.setAdminName(adminMapper.selectById(adminId).getName());
+        if (adminId != 0) {
+            detailInfo.setAdminName(adminMapper.selectById(adminId).getName());
+        }
         detailInfo.setAddress(RequestUtils.getAddressByUserId(userId));
         return detailInfo;
     }
