@@ -39,6 +39,11 @@ import java.util.List;
 public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
         implements MessageService {
 
+    /**
+     * 消息id阈值，如果超过了阈值就说明消息在message_user表中
+     */
+    private static final Integer SEG_VALUE = 100000;
+
     @Autowired
     UserService userService;
 
@@ -53,8 +58,8 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
         Integer buildingId = user.getBuildingId();
         Integer unitId = user.getUnitId();
         QueryWrapper<Message> wrapper = new QueryWrapper<>();
-        wrapper.eq("community_id",communityId).or().eq("building_id",buildingId)
-                .or().eq("unit_id",unitId).orderByDesc("anno_time");
+        wrapper.eq("community_id", communityId).or().eq("building_id", buildingId)
+                .or().eq("unit_id", unitId).orderByDesc("anno_time");
         List<Message> messages = list(wrapper);
         LinkedList<MessageInfo> list = new LinkedList<>();
         for (Message i : messages) {
@@ -69,10 +74,10 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
         List<MessageUser> list1 = messageUserService.list();
         for (MessageUser messageUser : list1) {
             List<Integer> listUser = JSONArray.parseArray(messageUser.getUserList(), Integer.class);
-            if (listUser.contains(userId)){
+            if (listUser.contains(userId)) {
                 String name = userService.getById(messageUser.getAnnoUser()).getName();
                 MessageInfo messageInfo = new MessageInfo();
-                BeanUtils.copyProperties(messageUser,messageInfo);
+                BeanUtils.copyProperties(messageUser, messageInfo);
                 messageInfo.setAnnoUser(name);
                 list.add(messageInfo);
             }
@@ -90,8 +95,8 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
         Integer unitId = user.getUnitId();
         LocalDate now = LocalDate.now();
         QueryWrapper<Message> wrapper = new QueryWrapper<>();
-        wrapper.eq("community_id",communityId).gt("anno_time",now).or().eq("building_id",buildingId).gt("anno_time",now)
-                .or().eq("unit_id",unitId).gt("anno_time",now).orderByDesc("anno_time");
+        wrapper.eq("community_id", communityId).gt("anno_time", now).or().eq("building_id", buildingId).gt("anno_time", now)
+                .or().eq("unit_id", unitId).gt("anno_time", now).orderByDesc("anno_time");
         List<Message> messages = list(wrapper);
         LinkedList<MessageInfo> list = new LinkedList<>();
         for (Message i : messages) {
@@ -104,14 +109,14 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
 
         //插入对用户消息的单独筛选
         QueryWrapper<MessageUser> wrapper2 = new QueryWrapper<>();
-        wrapper2.gt("anno_time",now);
+        wrapper2.gt("anno_time", now);
         List<MessageUser> list1 = messageUserService.list(wrapper2);
         for (MessageUser messageUser : list1) {
             List<Integer> listUser = JSONArray.parseArray(messageUser.getUserList(), Integer.class);
-            if (listUser.contains(userId)){
+            if (listUser.contains(userId)) {
                 String name = userService.getById(messageUser.getAnnoUser()).getName();
                 MessageInfo messageInfo = new MessageInfo();
-                BeanUtils.copyProperties(messageUser,messageInfo);
+                BeanUtils.copyProperties(messageUser, messageInfo);
                 messageInfo.setAnnoUser(name);
                 list.add(messageInfo);
             }
@@ -174,6 +179,10 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
         if (RequestUtils.getCurrentPermId() == 0) {
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
-        return removeById(messageId);
+        if (messageId >= SEG_VALUE) {
+            return messageUserService.removeById(messageId);
+        } else {
+            return removeById(messageId);
+        }
     }
 }

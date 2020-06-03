@@ -22,6 +22,12 @@ public class AnnoConditionInfo implements Serializable {
 
     private static final long serialVersionUID = -3856628162644885988L;
 
+    @ApiModelProperty("楼栋id")
+    private Integer buildingId;
+
+    @ApiModelProperty("单元id")
+    private Integer unitId;
+
     @ApiModelProperty("年龄下限")
     private Integer minAge;
 

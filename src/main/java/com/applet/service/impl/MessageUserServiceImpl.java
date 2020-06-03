@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.applet.bean.dto.AnnoConditionInfo;
 import com.applet.bean.entity.MessageUser;
 import com.applet.bean.entity.User;
+import com.applet.common.KnownException;
+import com.applet.enums.ExceptionEnum;
 import com.applet.mapper.MessageUserMapper;
 import com.applet.mapper.UserMapper;
 import com.applet.service.MessageUserService;
@@ -35,8 +37,19 @@ public class MessageUserServiceImpl extends ServiceImpl<MessageUserMapper, Messa
     UserService userService;
 
     @Override
-    public Boolean annoMessageCondition(AnnoConditionInfo info) {
+    public Boolean annoMessageCondition(AnnoConditionInfo info,List<Integer> buildingId,List<Integer> unitId) {
+        //权限管理
+        Integer permId = RequestUtils.getCurrentPermId();
+        if (permId == 0) {
+            throw new KnownException(ExceptionEnum.NO_PERMISSION);
+        }
         QueryWrapper<User> wrapper = new QueryWrapper<>();
+        if (buildingId != null) {
+            wrapper.in("building_id",buildingId);
+        }
+        if (unitId != null) {
+            wrapper.or().in("building_id",buildingId);
+        }
         if (Objects.equals("男", info.getGender())) {
             wrapper.eq("gender", "男");
         } else if (Objects.equals("女", info.getGender())) {
