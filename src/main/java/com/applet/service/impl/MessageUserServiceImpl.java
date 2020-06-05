@@ -37,7 +37,7 @@ public class MessageUserServiceImpl extends ServiceImpl<MessageUserMapper, Messa
     UserService userService;
 
     @Override
-    public Boolean annoMessageCondition(AnnoConditionInfo info,List<Integer> buildingId,List<Integer> unitId) {
+    public Boolean annoMessageCondition(AnnoConditionInfo info, List<Integer> buildingId, List<Integer> unitId) {
         //权限管理
         Integer permId = RequestUtils.getCurrentPermId();
         if (permId == 0) {
@@ -45,10 +45,10 @@ public class MessageUserServiceImpl extends ServiceImpl<MessageUserMapper, Messa
         }
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         if (buildingId != null) {
-            wrapper.in("building_id",buildingId);
+            wrapper.in("building_id", buildingId);
         }
         if (unitId != null) {
-            wrapper.or().in("building_id",buildingId);
+            wrapper.or().in("unit_id", unitId);
         }
         if (Objects.equals("男", info.getGender())) {
             wrapper.eq("gender", "男");
@@ -77,9 +77,11 @@ public class MessageUserServiceImpl extends ServiceImpl<MessageUserMapper, Messa
             ArrayList<Integer> users = new ArrayList<>();
             for (String house : list2) {
                 QueryWrapper<User> wrapper1 = new QueryWrapper<>();
-                wrapper1.eq("house_num",house);
+                wrapper1.eq("house_num", house);
                 for (User user : userService.list(wrapper1)) {
-                    users.add(user.getId());
+                    if (!users.contains(user.getId())) {
+                        users.add(user.getId());
+                    }
                 }
             }
 

@@ -25,9 +25,6 @@ public class AnnoConditionInfo implements Serializable {
     @ApiModelProperty("楼栋id")
     private Integer buildingId;
 
-    @ApiModelProperty("单元id")
-    private Integer unitId;
-
     @ApiModelProperty("年龄下限")
     private Integer minAge;
 
