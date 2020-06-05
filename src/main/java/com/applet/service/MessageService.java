@@ -7,6 +7,7 @@ import com.applet.bean.vo.MessageInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public interface MessageService extends IService<Message> {
     /**
      * 返回当前用户所有消息
      */
-    List<MessageInfo> getAllMessage();
+    List<MessageInfo> getAllMessage(LocalDateTime start, LocalDateTime end);
 
     /**
      * 获取当前用户单日消息

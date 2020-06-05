@@ -31,6 +31,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author LuckyCurve
@@ -53,7 +54,7 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
     MessageUserService messageUserService;
 
     @Override
-    public List<MessageInfo> getAllMessage() {
+    public List<MessageInfo> getAllMessage(LocalDateTime start, LocalDateTime end) {
         Integer userId = RequestUtils.getCurrentUserId();
         User user = userService.getById(userId);
         Integer communityId = user.getCommunityId();
@@ -85,14 +86,18 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
             }
         }
 
+        //根绝时间过滤消息
+        List<MessageInfo> list2 = list.stream().filter(a -> a.getAnnoTime().isAfter(start)&& a.getAnnoTime().isBefore(end))
+                .collect(Collectors.toList());
+
         //分离消息头体
-        for (MessageInfo info : list) {
+        for (MessageInfo info : list2) {
             String[] split = info.getMessage().split(DEPART_CHAR);
             info.setTitle(split[0]);
             info.setMessage(split[1]);
         }
 
-        return MessageInfoUtils.sort(list);
+        return MessageInfoUtils.sort(list2);
     }
 
     @Override
@@ -150,7 +155,7 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
             throw new KnownException(ExceptionEnum.NO_PERMISSION);
         }
 
-        Message message = Message.builder().message(info.getTitle()+DEPART_CHAR+info.getMessage()).communityId(user.getCommunityId())
+        Message message = Message.builder().message(info.getTitle() + DEPART_CHAR + info.getMessage()).communityId(user.getCommunityId())
                 .annoTime(LocalDateTime.now()).level(info.getLevel()).annoUser(user.getId()).build();
 
         return save(message);
@@ -165,7 +170,7 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
         }
         LinkedList<Message> list = new LinkedList<>();
         for (Integer i : buildingId) {
-            Message message = Message.builder().message(info.getTitle()+DEPART_CHAR+info.getMessage())
+            Message message = Message.builder().message(info.getTitle() + DEPART_CHAR + info.getMessage())
                     .buildingId(i)
                     .annoTime(LocalDateTime.now()).level(info.getLevel()).annoUser(user.getId()).build();
             list.add(message);
@@ -182,7 +187,7 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
         }
         LinkedList<Message> list = new LinkedList<>();
         for (Integer i : unitId) {
-            Message message = Message.builder().message(info.getTitle()+DEPART_CHAR+info.getMessage())
+            Message message = Message.builder().message(info.getTitle() + DEPART_CHAR + info.getMessage())
                     .unitId(i)
                     .annoTime(LocalDateTime.now()).level(info.getLevel()).annoUser(user.getId()).build();
             list.add(message);

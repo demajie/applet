@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,10 +68,10 @@ public class MessageController {
     }
 
 
-    @GetMapping("getAllMessage")
-    @ApiOperation("普通用户，查询所有消息")
-    public JsonWrapper<List<MessageInfo>> getAllMessage() {
-        return new JsonWrapper<>(messageService.getAllMessage());
+    @GetMapping("getTimedMessage")
+    @ApiOperation("普通用户，查询指定时间内消息")
+    public JsonWrapper<List<MessageInfo>> getAllMessage(LocalDateTime start,LocalDateTime end) {
+        return new JsonWrapper<>(messageService.getAllMessage(start,end));
     }
 
     @GetMapping("getDayMessage")
