@@ -21,6 +21,9 @@ import java.io.Serializable;
 public class AnnoMessageInfo implements Serializable {
     private static final long serialVersionUID = -7103131094051149305L;
 
+    @ApiModelProperty("消息头")
+    private String title;
+
     @ApiModelProperty("消息体")
     private String message;
 

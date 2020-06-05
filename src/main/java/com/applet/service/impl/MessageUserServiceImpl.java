@@ -86,7 +86,7 @@ public class MessageUserServiceImpl extends ServiceImpl<MessageUserMapper, Messa
             }
 
             //数据持久化
-            MessageUser message = MessageUser.builder().message(info.getMessage())
+            MessageUser message = MessageUser.builder().message(info.getTitle()+MessageServiceImpl.DEPART_CHAR+info.getMessage())
                     .annoUser(RequestUtils.getCurrentUserId())
                     .level(info.getLevel())
                     .annoTime(LocalDateTime.now())
@@ -102,7 +102,7 @@ public class MessageUserServiceImpl extends ServiceImpl<MessageUserMapper, Messa
             users.add(user.getId());
         }
         //数据持久化
-        MessageUser message = MessageUser.builder().message(info.getMessage())
+        MessageUser message = MessageUser.builder().message(info.getTitle()+MessageServiceImpl.DEPART_CHAR+info.getMessage())
                 .annoUser(RequestUtils.getCurrentUserId())
                 .level(info.getLevel())
                 .annoTime(LocalDateTime.now())

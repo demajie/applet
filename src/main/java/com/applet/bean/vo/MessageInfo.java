@@ -27,6 +27,9 @@ public class MessageInfo implements Serializable {
     @ApiModelProperty("消息id")
     private Integer id;
 
+    @ApiModelProperty("消息头")
+    private String title;
+
     @ApiModelProperty("消息体")
     private String message;
 

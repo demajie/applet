@@ -46,6 +46,9 @@ public class AnnoConditionInfo implements Serializable {
     @ApiModelProperty("消息级别")
     private String level;
 
+    @ApiModelProperty("消息头部")
+    private String title;
+    
     @ApiModelProperty("消息内容")
     private String message;
 }
