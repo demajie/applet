@@ -22,8 +22,8 @@ public class MailTest {
     @Test
     public void test2(){
         List<Integer> list = new ArrayList<>();
-        list.add(2);
+        list.add(1);
         list.add(5);
-        MailUtils.sendMails(list,"粑粑");
+        MailUtils.sendMails(list,"t");
     }
 }

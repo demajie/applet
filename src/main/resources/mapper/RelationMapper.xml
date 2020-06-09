@@ -6,7 +6,7 @@
         delete from relation where admin_id=#{adminId} and user_id=#{userId}
     </delete>
 
-    <select id="getRelationedUserId" resultType="int">
+    <select id="getRelationedUserIds" resultType="int">
         select user_id from relation where admin_id=#{adminId}
     </select>
 </mapper>

@@ -18,13 +18,13 @@ public class RelationServiceTest {
     @Test
     public void test1(){
         Relation relation = new Relation();
-        relation.setAdminId(1);
-        relation.setUserId(2);
+        relation.setAdminId(5);
+        relation.setUserId(5);
         relationService.cancelRelation(relation);
     }
 
     @Test
     public void test2() {
-        System.out.println(relationService.getRelationedUserIds(1));
+        System.out.println(relationService.getRelationedUserIds(5));
     }
 }
