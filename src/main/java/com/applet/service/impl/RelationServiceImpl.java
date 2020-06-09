@@ -17,7 +17,6 @@ public class RelationServiceImpl extends ServiceImpl<RelationMapper, Relation> i
 
     @Override
     public Boolean createRelation(Relation relation) {
-        if ()
 
         relationMapper.insert(relation);
         return true;
