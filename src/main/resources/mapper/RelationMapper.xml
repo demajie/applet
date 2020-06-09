@@ -9,4 +9,8 @@
     <select id="getRelationedUserIds" resultType="int">
         select user_id from relation where admin_id=#{adminId}
     </select>
+
+    <select id="isRelationed" resultType="int">
+        select count(*) from relation where admin_id=#{adminId} and user_id=#{userId}
+    </select>
 </mapper>

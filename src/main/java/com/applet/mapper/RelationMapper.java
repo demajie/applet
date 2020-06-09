@@ -16,4 +16,6 @@ public interface RelationMapper extends BaseMapper<Relation> {
     void cancelRelation(@Param("adminId") Integer adminId,@Param("userId") Integer userId);
 
     List<Integer> getRelationedUserIds(@Param("adminId") Integer adminId);
+
+    int isRelationed(@Param("adminId") Integer adminId, @Param("userId") Integer userId);
 }
