@@ -44,6 +44,9 @@ public class CommentDetailInfo implements Serializable {
     @ApiModelProperty("接件人姓名")
     private String adminName;
 
+    @ApiModelProperty("是否匿名,1代表匿名")
+    private Integer isAnonymous;
+
     @ApiModelProperty("用户住址")
     private String address;
 

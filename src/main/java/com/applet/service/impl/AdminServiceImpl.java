@@ -8,10 +8,13 @@ import com.applet.bean.vo.AdminSimpleInfo;
 import com.applet.common.KnownException;
 import com.applet.enums.ExceptionEnum;
 import com.applet.mapper.AdminMapper;
+import com.applet.mapper.RelationMapper;
 import com.applet.mapper.UserMapper;
 import com.applet.service.AdminService;
+import com.applet.utils.MailUtils;
 import com.applet.utils.QiniuUtils;
 import com.applet.utils.RequestUtils;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    RelationMapper relationMapper;
 
     /**
      *  待完善:权限验证
@@ -93,6 +99,16 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
         Admin admin = adminMapper.selectById(id);
         admin.setState(state);
         adminMapper.updateById(admin);
+
+        /**
+         *  群发邮件
+         */
+        if (state==0) {
+            List<Integer> userIds = relationMapper.getRelationedUserIds(id);
+            MailUtils.sendMails(userIds,admin.getName());
+        }
+
+
         return true;
     }
 
@@ -102,8 +118,15 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin>
     }
 
     @Override
-    public AdminDetailInfo getAdminDetailInfo(Integer userId) {
-        return adminMapper.getAdminDetailInfo(userId);
+    public AdminDetailInfo getAdminDetailInfo(Integer adminId) {
+        AdminDetailInfo detailInfo =  adminMapper.getAdminDetailInfo(adminId);
+
+        if (relationMapper.isRelationed(adminId,RequestUtils.getCurrentUserId())>0){
+            detailInfo.setIsRelationed(1);
+        }else{
+            detailInfo.setIsRelationed(0);
+        }
+        return  detailInfo;
     }
 
     @Override

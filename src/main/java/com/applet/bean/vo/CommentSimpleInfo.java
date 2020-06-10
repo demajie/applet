@@ -41,6 +41,10 @@ public class CommentSimpleInfo implements Serializable {
     @ApiModelProperty("0:未接件,1:办理中,2:已办理")
     private Integer status;
 
+    @ApiModelProperty("是否匿名,1代表匿名")
+    private Integer isAnonymous;
+
+
     @ApiModelProperty(hidden = true)
     private User user;
 

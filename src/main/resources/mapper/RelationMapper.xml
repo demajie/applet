@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.applet.mapper.RelationMapper">
+
+    <delete id="cancelRelation">
+        delete from relation where admin_id=#{adminId} and user_id=#{userId}
+    </delete>
+
+    <select id="getRelationedUserIds" resultType="int">
+        select user_id from relation where admin_id=#{adminId}
+    </select>
+
+    <select id="isRelationed" resultType="int">
+        select count(*) from relation where admin_id=#{adminId} and user_id=#{userId}
+    </select>
+</mapper>

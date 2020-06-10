@@ -37,4 +37,7 @@ public class AdminDetailInfo implements Serializable{
 
     @ApiModelProperty("工作状态:0在岗,1出勤,2节假日")
     private Integer state;
+
+    @ApiModelProperty("用户是否开启了该管理员的返回提醒,1代表开启")
+    private Integer isRelationed;
 }
