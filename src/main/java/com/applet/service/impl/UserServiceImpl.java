@@ -5,12 +5,15 @@ import com.applet.bean.dto.UserAddBaseInfo;
 import com.applet.bean.dto.UserAddressInfo;
 import com.applet.bean.entity.User;
 import com.applet.bean.vo.LoginInfo;
+import com.applet.bean.vo.UserBaseInfo;
 import com.applet.common.KnownException;
 import com.applet.enums.ExceptionEnum;
 import com.applet.mapper.UserMapper;
+import com.applet.service.CommunityService;
 import com.applet.service.UserService;
 import com.applet.utils.RequestUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fasterxml.jackson.databind.BeanProperty;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    CommunityService communityService;
 
     @Override
     public LoginInfo lsLogin(Integer userId) {
@@ -39,17 +45,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         //存储用户id
         String sessionId = RequestUtils.getHttpSession().getId();
-        RequestUtils.getHttpSession().setAttribute("userId",userId);
+        RequestUtils.getHttpSession().setAttribute("userId", userId);
         return LoginInfo.builder().isLogin(1).level(level).jSessionId(sessionId).build();
     }
 
     @Override
     public Boolean saveUser(UserAddBaseInfo userAddInfo) {
         User user = new User();
-        BeanUtils.copyProperties(userAddInfo,user);
+        BeanUtils.copyProperties(userAddInfo, user);
         user.setId(userAddInfo.getAppId());
         user.setPermId(0);
-        RequestUtils.getHttpSession().setAttribute("userId",userAddInfo.getAppId());
+        RequestUtils.getHttpSession().setAttribute("userId", userAddInfo.getAppId());
         return save(user);
     }
 
@@ -65,7 +71,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
                 .gender(info.getGender())
                 .email(info.getEmail())
                 .birthday(info.getBirthday()).build();
-        RequestUtils.getHttpSession().setAttribute("userId",info.getId());
+        RequestUtils.getHttpSession().setAttribute("userId", info.getId());
         return save(user);
     }
 
@@ -78,7 +84,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public Boolean saveAddressInfo(UserAddressInfo userAddressInfo) {
         Integer userId = RequestUtils.getCurrentUserId();
         User user = new User();
-        BeanUtils.copyProperties(userAddressInfo,user);
+        BeanUtils.copyProperties(userAddressInfo, user);
         user.setId(userId);
         return updateById(user);
     }
@@ -86,5 +92,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public Integer countByHouse(String house) {
         return userMapper.countByHouse(house);
+    }
+
+    @Override
+    public UserBaseInfo getBaseInfo() {
+        Integer id = RequestUtils.getCurrentUserId();
+        User user = getById(id);
+        UserBaseInfo info = new UserBaseInfo();
+        BeanUtils.copyProperties(user, info);
+        //超级管理员
+        if (user.getPermId() == 2) {
+            String name = communityService.getById(user.getCommunityId()).getName();
+            info.setAddress(name);
+            return info;
+        }
+        info.setAddress(RequestUtils.getCurrentAddress());
+        return info;
     }
 }
