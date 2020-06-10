@@ -58,7 +58,7 @@ public class CommentUtils {
         }else if (gender.equals("女")){
             return name.substring(0,1) + "女士";
         }
-        return "未知性别";
+        return "匿名居民";
     }
 
     /**

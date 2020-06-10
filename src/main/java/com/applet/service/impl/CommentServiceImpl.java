@@ -94,7 +94,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public List<CommentSimpleInfo> getUnDealedCommentSimpleInfos(Integer communityId, Integer typeId, Integer timeRangeId) {
         List<CommentSimpleInfo> commentSimpleInfos = commentMapper.getUnDealedCommentSimpleInfos(communityId, CommentUtils.getType(typeId), CommentUtils.getTimeRange(timeRangeId));
         for (CommentSimpleInfo commentSimpleInfo : commentSimpleInfos) {
-            commentSimpleInfo.setFirstName(CommentUtils.getFirstName(commentSimpleInfo.getUser()));
+            if(commentSimpleInfo.getIsAnonymous()==1){
+                commentSimpleInfo.setFirstName("匿名居民");
+            }else{
+                commentSimpleInfo.setFirstName(CommentUtils.getFirstName(commentSimpleInfo.getUser()));
+            }
             commentSimpleInfo.setCanDeal(CommentUtils.hasPriorityToDeal(commentSimpleInfo));
         }
         return commentSimpleInfos;
@@ -103,9 +107,6 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Override
     public List<CommentSimpleInfo> getMyCommentSimpleInfos(Integer userId, Integer typeId, Integer timeRangeId) {
         List<CommentSimpleInfo> commentSimpleInfos = commentMapper.getMyCommentSimpleInfos(userId, CommentUtils.getType(typeId), CommentUtils.getTimeRange(timeRangeId));
-        for (CommentSimpleInfo commentSimpleInfo : commentSimpleInfos) {
-            commentSimpleInfo.setFirstName(CommentUtils.getFirstName(commentSimpleInfo.getUser()));
-        }
         return commentSimpleInfos;
     }
 
@@ -114,7 +115,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         CommentDetailInfo detailInfo = commentMapper.getCommentDetailInfo(commentId);
         Integer userId = detailInfo.getUserId();
         Integer adminId = detailInfo.getAdminId();
-        detailInfo.setName(userMapper.selectById(userId).getName());
+        if (detailInfo.getIsAnonymous()!=1){
+            detailInfo.setName(userMapper.selectById(userId).getName());
+        }else{
+            detailInfo.setName("匿名居民");
+        }
         if (adminId != 0) {
             detailInfo.setAdminName(adminMapper.selectById(adminId).getName());
         }

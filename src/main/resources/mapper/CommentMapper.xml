@@ -8,7 +8,7 @@
     </resultMap>
 
     <select id="getDealedCommentSimpleInfos" resultMap="commentInfo">
-        select id,title, left(content,10) introduction,type,day,status,user_id from comment
+        select id,title, left(content,10) introduction,type,day,status,user_id,is_anonymous from comment
          where community_id=#{communityId} and status = 2
         <if test="type!=null">
             and type = #{type}
@@ -19,7 +19,7 @@
     </select>
 
     <select id="getUnDealedCommentSimpleInfos" resultMap="commentInfo">
-         select id,title,left(content,10) introduction,type,day,status,user_id,admin_id from comment where
+         select id,title,left(content,10) introduction,type,day,is_anonymous,status,user_id,admin_id from comment where
          community_id=#{communityId} and status!=2
         <if test="type!=null">
             and type = #{type}
@@ -55,7 +55,7 @@
     </select>
 
     <select id="getCommentDetailInfo" resultMap="commentDetailInfo">
-        select id,title,content,phone,day,status,user_id,admin_id
+        select id,title,content,phone,day,status,user_id,admin_id,is_anonymous
         from comment where id = #{id}
     </select>
 </mapper>
