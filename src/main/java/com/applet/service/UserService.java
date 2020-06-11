@@ -7,6 +7,7 @@ import com.applet.bean.dto.UserAddressInfo;
 import com.applet.bean.entity.User;
 import com.applet.bean.vo.LoginInfo;
 import com.applet.bean.vo.MessageInfo;
+import com.applet.bean.vo.UserBaseInfo;
 import com.applet.mapper.UserMapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,4 +37,6 @@ public interface UserService extends IService<User> {
     Boolean saveAddressInfo(UserAddressInfo userAddressInfo);
 
     Integer countByHouse(String house);
+
+    UserBaseInfo getBaseInfo();
 }

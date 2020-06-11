@@ -5,6 +5,7 @@ import com.applet.bean.dto.SuperAdminAddInfo;
 import com.applet.bean.dto.UserAddBaseInfo;
 import com.applet.bean.dto.UserAddressInfo;
 import com.applet.bean.vo.LoginInfo;
+import com.applet.bean.vo.UserBaseInfo;
 import com.applet.common.JsonWrapper;
 import com.applet.service.IdMapperService;
 import com.applet.service.UserService;
@@ -72,5 +73,11 @@ public class UserController {
         return new JsonWrapper<>(userService.getCurrentAddress());
     }
 
+
+    @GetMapping("/getBaseInfo")
+    @ApiOperation("返回当前用户基本信息")
+    public JsonWrapper<UserBaseInfo> getBaseInfo() {
+        return new JsonWrapper<>(userService.getBaseInfo());
+    }
 
 }
