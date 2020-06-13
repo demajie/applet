@@ -53,6 +53,9 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
     @Autowired
     MessageUserService messageUserService;
 
+    @Autowired
+    MessageMapper messageMapper;
+
     @Override
     public List<MessageInfo> getAllMessage(LocalDateTime start, LocalDateTime end) {
         Integer userId = RequestUtils.getCurrentUserId();
@@ -87,7 +90,7 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
         }
 
         //根绝时间过滤消息
-        List<MessageInfo> list2 = list.stream().filter(a -> a.getAnnoTime().isAfter(start)&& a.getAnnoTime().isBefore(end))
+        List<MessageInfo> list2 = list.stream().filter(a -> a.getAnnoTime().isAfter(start) && a.getAnnoTime().isBefore(end))
                 .collect(Collectors.toList());
 
         //分离消息头体
@@ -205,5 +208,47 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message>
         } else {
             return removeById(messageId);
         }
+    }
+
+    @Override
+    public List<MessageInfo> getAnnoMessage() {
+        //判断用户权限
+        User user2 = userService.getById(RequestUtils.getCurrentUserId());
+        if (user2.getPermId() == 0) {
+            throw new KnownException(ExceptionEnum.NO_PERMISSION);
+        }
+
+        Integer id = RequestUtils.getCurrentUserId();
+        List<Message> list1 = messageMapper.findByAnnoId(id);
+        //常规消息
+        List<MessageInfo> messageInfos1 = list1.parallelStream().map(o -> {
+            MessageInfo info = new MessageInfo();
+            BeanUtils.copyProperties(o, info);
+            //修改消息格式
+            String[] split = o.getMessage().split(DEPART_CHAR);
+            info.setTitle(split[0]);
+            info.setMessage(split[1]);
+            //获取消息发布人
+            User user = userService.getById(o.getAnnoUser());
+            info.setAnnoUser(user.getName());
+            return info;
+        }).collect(Collectors.toList());
+
+        //指定到人上的消息
+        List<MessageUser> messageUser = messageUserService.getMessageByAnnoId(id);
+        messageUser.forEach(o -> {
+            MessageInfo temp = new MessageInfo();
+            BeanUtils.copyProperties(o,temp);
+            //修改消息格式
+            String[] split = o.getMessage().split(DEPART_CHAR);
+            temp.setTitle(split[0]);
+            temp.setMessage(split[1]);
+            //获取消息发布人
+            User user = userService.getById(o.getAnnoUser());
+            temp.setAnnoUser(user.getName());
+            messageInfos1.add(temp);
+        });
+
+        return MessageInfoUtils.sort(messageInfos1);
     }
 }

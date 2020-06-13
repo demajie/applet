@@ -34,6 +34,9 @@ import java.util.stream.Stream;
 public class MessageUserServiceImpl extends ServiceImpl<MessageUserMapper, MessageUser> implements MessageUserService {
 
     @Autowired
+    MessageUserMapper messageUserMapper;
+
+    @Autowired
     UserService userService;
 
     @Override
@@ -111,5 +114,10 @@ public class MessageUserServiceImpl extends ServiceImpl<MessageUserMapper, Messa
         save(message);
 
         return true;
+    }
+
+    @Override
+    public List<MessageUser> getMessageByAnnoId(Integer annoId) {
+        return messageUserMapper.getMessageUserByAnnoId(annoId);
     }
 }

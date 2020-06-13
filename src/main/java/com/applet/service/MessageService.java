@@ -41,4 +41,9 @@ public interface MessageService extends IService<Message> {
     Boolean annoMessageUnit(List<Integer> unitId,AnnoMessageInfo info);
 
     Boolean deleteMessage(Integer messageId);
+
+    /**
+     * @return 查询当前管理员发布的消息
+     */
+    List<MessageInfo> getAnnoMessage();
 }

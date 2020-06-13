@@ -80,4 +80,10 @@ public class MessageController {
         return new JsonWrapper<>(messageService.getDayMessage());
     }
 
+    @GetMapping("getAnnoMessage")
+    @ApiOperation("管理员，查询发布消息")
+    public JsonWrapper<List<MessageInfo>> getAnnoMessage(){
+        return new JsonWrapper<>(messageService.getAnnoMessage());
+    }
+
 }
