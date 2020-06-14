@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 @Component
 public class MailUtils {
 
-    private static String from = "541099558@qq.com";
+    private static String from = "3078843512@qq.com";
 
     private static MailSender sender;
 
@@ -56,7 +56,7 @@ public class MailUtils {
     public static void sendMails(List<Integer> ids,String adminName) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setText("您设置了返回提醒的管理员:"+adminName + " 状态已变为在岗");
-        message.setSubject("您关注的管理员上班了");
+        message.setSubject("<社区情报局>您关注的管理员上班了");
         message.setFrom(from);
 
         for (int i = 0; i < ids.size(); i++) {

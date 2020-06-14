@@ -83,7 +83,7 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
              *  发送邮件通知用户预约成功
              */
             new Thread(() -> {
-                MailUtils.sendMail(email, "预约成功", "您的预约已成功");
+                MailUtils.sendMail(email, "<社区情报局>预约成功", "您的预约已成功");
                 System.out.println("发往" + email + "的邮件成功");
             }).start();
 
@@ -107,7 +107,7 @@ public class AppointmentServiceImpl extends ServiceImpl<AppointmentMapper, Appoi
          */
         String email = userMapper.selectById(appointment.getUserId()).getEmail();
         new Thread(() -> {
-            MailUtils.sendMail(email, "预约失败", "该时段繁忙,您的预约失败");
+            MailUtils.sendMail(email, "<社区情报局>预约失败", "该时段繁忙,您的预约失败");
         }).start();
         return true;
     }
