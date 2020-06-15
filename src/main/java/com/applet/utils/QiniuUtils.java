@@ -25,7 +25,7 @@ public class QiniuUtils {
 
     private static String bucket = "applet-community";
 
-    private static String baseUrl = "www.qiuzhao.top";
+    private static String baseUrl = "www.qiuzhao.top/";
 
     /**
      * 上传凭证有效期 10min
