@@ -9,9 +9,9 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   mail:
     host: smtp.qq.com
-    username: 3078843512@qq.com
-    password: xahmpyqdjoyzddad
-    port: 587   # 465,587
+    username: 541099558@qq.com
+    password: medeljkrtgucbebd
+    port: 587 # 465,587
 
 
 

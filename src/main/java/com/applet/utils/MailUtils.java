@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 @Component
 public class MailUtils {
 
-    private static String from = "3078843512@qq.com";
+    private static String from = "541099558@qq.com";
 
     private static MailSender sender;
 
@@ -48,6 +48,7 @@ public class MailUtils {
         message.setFrom(from);
         message.setTo(to);
         sender.send(message);
+        System.out.println("success");
     }
 
     /**
