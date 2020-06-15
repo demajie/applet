@@ -34,7 +34,7 @@ public class AdminController {
 
     @ApiOperation("删除管理员")
     @ApiImplicitParam(name = "id",value = "管理员id",dataType = "Integer")
-    @PostMapping("deleteAdmin/{id}")
+    @GetMapping("deleteAdmin/{id}")
     public JsonWrapper<Boolean> deleteAdmin(@PathVariable("id")Integer id){
         return new JsonWrapper<>(adminService.deleteAdmin(id));
     }
