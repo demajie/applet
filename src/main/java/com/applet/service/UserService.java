@@ -39,4 +39,6 @@ public interface UserService extends IService<User> {
     Integer countByHouse(String house);
 
     UserBaseInfo getBaseInfo();
+
+    Boolean updateEmail(String email);
 }

@@ -13,7 +13,6 @@ import com.applet.service.CommunityService;
 import com.applet.service.UserService;
 import com.applet.utils.RequestUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fasterxml.jackson.databind.BeanProperty;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,5 +107,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         info.setAddress(RequestUtils.getCurrentAddress());
         return info;
+    }
+
+    @Override
+    public Boolean updateEmail(String email) {
+        Integer userId = RequestUtils.getCurrentUserId();
+        User user = User.builder().id(userId).email(email).build();
+        return updateById(user);
     }
 }

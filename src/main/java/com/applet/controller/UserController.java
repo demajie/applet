@@ -80,4 +80,11 @@ public class UserController {
         return new JsonWrapper<>(userService.getBaseInfo());
     }
 
+    @GetMapping("/updateEmail")
+    @ApiOperation("修改当前用户邮箱")
+    public JsonWrapper<Boolean> updateEmail(String email) {
+        return new JsonWrapper<>(userService.updateEmail(email));
+    }
+
+
 }
